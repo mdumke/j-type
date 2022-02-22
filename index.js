@@ -4,6 +4,7 @@ const DISPLAY = document.querySelector('#display')
 const INPUT = document.querySelector('#input')
 
 let target = 0
+let level = 1
 
 const handleSuccess = () => {
   reset()
@@ -21,7 +22,7 @@ const handleWait = () => {
 
 const step = () => {
   const guess = INPUT.value
-  const goal = HIRAGANA[target][1]
+  const goal = HIRAGANA[level][target][1]
 
   if (guess === goal) {
     handleSuccess()
@@ -34,7 +35,7 @@ const step = () => {
 
 const chooseTarget = currentTarget => {
   while (true) {
-    const newTarget = Math.floor(Math.random() * HIRAGANA.length)
+    const newTarget = Math.floor(Math.random() * HIRAGANA[level].length)
 
     if (newTarget !== currentTarget) {
       return newTarget
@@ -45,7 +46,7 @@ const chooseTarget = currentTarget => {
 const reset = () => {
   target = chooseTarget(target)
 
-  DISPLAY.innerHTML = HIRAGANA[target][0]
+  DISPLAY.innerHTML = HIRAGANA[level][target][0]
   INPUT.value = ''
 }
 
