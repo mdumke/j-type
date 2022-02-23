@@ -1,3 +1,33 @@
+class Hiragana {
+  constructor () {
+    this.current = 0
+    this.level = 0
+  }
+
+  level (lv) {
+    this.level = lv
+    return this
+  }
+
+  toJSON () {
+    return {
+      hiragana: HIRAGANA[this.level][this.current][0],
+      romaji: HIRAGANA[this.level][this.current][1]
+    }
+  }
+
+  sample () {
+    while (true) {
+      const newTarget = Math.floor(Math.random() * HIRAGANA[this.level].length)
+
+      if (newTarget !== this.current) {
+        this.current = newTarget
+        return this.toJSON()
+      }
+    }
+  }
+}
+
 const HIRAGANA = [
   [
     ['あ', 'a'],
@@ -79,4 +109,4 @@ const HIRAGANA = [
   ]
 ]
 
-export { HIRAGANA }
+export { Hiragana }

@@ -17,27 +17,108 @@ body {
     background-color: var(--white);
 }
 
-.header {
-    box-shadow: 0px 3px 4px #eeea;
-    margin-bottom: 100px;
-    background-color: var(--blue);
-    color: var(--light-grey);
+.container {
+    display: flex;
+    height: 100vh;
 }
 
-.navigation {
-    height: 63px;
-    border-bottom: 1px solid #ccc;
+.start-screen {
     display: flex;
+    margin: auto;
+    width: 500px;
+    height: 500px;
+    background-color: var(--blue);
+    color: var(--white);
+    border-radius: 4px;
+    box-shadow: 2px 3px 6px #999a;
+    position: relative;
+    cursor: pointer;
+}
+
+.start-screen:active {
+    box-shadow: 2px 3px 6px #ccca;
+}
+
+.start-screen__content {
+    margin: auto;
+    text-align: center;
 }
 
 .title {
-    margin: auto;
-    font-size: 1.2rem;
+    font-size: 5rem;
 }
 
-.playground {
-    margin: 0 auto;
-    width: 600px;
+.sub-title {
+    font-size: 1.5rem;
+}
+
+.loader {
+    position: absolute;
+    bottom: 10px;
+    height: 10px;
+    width: 100%;
+    background-color: var(--red);
+    animation-duration: 2s;
+    animation-name: loading;
+}
+
+@keyframes loading {
+    from {
+        width: 0%;
+    }
+
+    to {
+        width: 100%;
+    }
+}
+
+.play-screen {
+    margin: auto;
+    width: 100%;
+}
+
+.play-screen__content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.arena {
+    display: flex;
+    flex-direction: row;
+    align-items: flex-end;
+    width: 450px;
+    justify-content: space-between;
+}
+
+.player  {
+    display: flex;
+    flex-direction: column;
+    width: 200px;
+}
+
+.player-left {
+    background-color: var(--blue);
+}
+
+.player-right {
+    background-color: var(--blue);
+}
+
+.powerbar {
+    height: 50px;
+    width: 100%;
+    background-color: var(--red);
+}
+
+.box {
+    height: 300px;
+    width: 100%;
+}
+
+
+
+
+.character-area {
     padding: 15px;
     border: 1px solid #ddd;
     border-radius: 4px;
@@ -47,8 +128,8 @@ body {
 
 .display-outer {
     margin: 0 auto;
-    width: 550px;
-    height: 550px;
+    width: 400px;
+    height: 400px;
     display: flex;
 }
 
@@ -76,4 +157,12 @@ body {
 
 .error {
     color: var(--red);
+}
+
+.hide {
+    display: none;
+}
+
+.wallpaper {
+    background-image: url('assets/images/japanese-garden.jpeg');
 }

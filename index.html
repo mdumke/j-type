@@ -10,25 +10,40 @@
 </head>
 
 <body>
-  <header class="header">
-    <nav class="navigation">
-      <div class="title">J-Type</div>
-    </nav>
-  </header>
+  <div id="container" class="container">
 
-  <div class="container">
-    <div class="playground">
-
-      <div class="display-outer">
-        <div id="display" class="display-inner"></div>
+    <div id="start-screen" class="start-screen">
+      <div class="start-screen__content">
+        <h1 class="title">J-TYPE</h1>
+        <p class="sub-title">Hiragana</p>
       </div>
-
-      <input type="text" class="input" id="input" autofocus>
-
+      <div id="loader"></div>
     </div>
+
+    <div id="play-screen" class="play-screen hide">
+      <div class="play-screen__content">
+        <div class="arena">
+          <div class="player player-left">
+            <div id="left-player__powerbar" class="powerbar left_player__powerbar"></div>
+            <div id="left-player__box" class="box left_player__box"></div>
+          </div>
+          <div class="player player-right">
+            <div id="right-player__powerbar" class="powerbar right_player__powerbar"></div>
+            <div id="right-player__box" class="box right_player__box"></div>
+          </div>
+        </div>
+        <div class="character-area">
+          <div class="display-outer">
+            <div id="display" class="display-inner"></div>
+          </div>
+          <input type="text" class="input" id="input" autofocus>
+        </div>
+      </div>
+    </div>
+
   </div>
 
-  <script type="module" src="index.js"></script>
+  <script type="module" src="src/index.js"></script>
 </body>
 
 </html>

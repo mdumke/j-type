@@ -4,7 +4,7 @@ const DISPLAY = document.querySelector('#display')
 const INPUT = document.querySelector('#input')
 
 let target = 0
-let level = 1
+let level = 0
 
 const handleSuccess = () => {
   reset()
