@@ -23,13 +23,14 @@ class PlayState {
   reset () {
     this.target = this.hiragana.sample()
     display.showTarget(this.target.hiragana)
+    display.unmarkError()
     display.clearInput()
   }
 
-  handleSuccess () {
+  async handleSuccess () {
     display.unmarkError()
-    audio.playVoiceRecording(this.target.romaji)
-    setTimeout(this.reset.bind(this), 800)
+    await audio.playVoiceRecording(this.target.romaji)
+    this.reset()
   }
 
   handleError () {

@@ -1,4 +1,5 @@
 import { SoundBuffer } from './sound-buffer.js'
+import { HIRAGANA } from './hiragana.js'
 
 const audio = {
   ctx: null,
@@ -9,7 +10,7 @@ const audio = {
   async loadHiragana () {
     const basePath = 'assets/audio/'
     const format = '.ogg'
-    const hiragana = ['a', 'e', 'i', 'o', 'u']
+    const hiragana = HIRAGANA.flatMap(level => level).map(([h, r]) => r)
 
     const sounds = await Promise.all(
       hiragana.map(
@@ -31,8 +32,8 @@ const audio = {
     )
   },
 
-  playVoiceRecording (romaji) {
-    audio.sounds.hiragana[romaji].play()
+  async playVoiceRecording (romaji) {
+    await audio.sounds.hiragana[romaji].play()
   },
 
   async init () {

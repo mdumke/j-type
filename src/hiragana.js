@@ -1,7 +1,8 @@
 class Hiragana {
   constructor () {
     this.current = 0
-    this.level = 0
+    this.level = 1
+    this.chars = HIRAGANA.slice(0, this.level + 1).flatMap(chars => chars)
   }
 
   level (lv) {
@@ -11,14 +12,14 @@ class Hiragana {
 
   toJSON () {
     return {
-      hiragana: HIRAGANA[this.level][this.current][0],
-      romaji: HIRAGANA[this.level][this.current][1]
+      hiragana: this.chars[this.current][0],
+      romaji: this.chars[this.current][1]
     }
   }
 
   sample () {
     while (true) {
-      const newTarget = Math.floor(Math.random() * HIRAGANA[this.level].length)
+      const newTarget = Math.floor(Math.random() * this.chars.length)
 
       if (newTarget !== this.current) {
         this.current = newTarget
@@ -38,75 +39,76 @@ const HIRAGANA = [
   ],
   [
     ['か', 'ka'],
-    ['さ', 'sa'],
-    ['た', 'ta'],
-    ['な', 'na'],
     ['き', 'ki'],
-    ['し', 'shi'],
-    ['ち', 'chi'],
-    ['に', 'ni'],
     ['く', 'ku'],
-    ['す', 'su'],
-    ['つ', 'tsu'],
-    ['ぬ', 'nu']
-  ],
-  [
     ['け', 'ke'],
-    ['せ', 'se'],
-    ['て', 'te'],
-    ['ね', 'ne'],
     ['こ', 'ko'],
-    ['そ', 'so'],
-    ['と', 'to'],
-    ['の', 'no'],
-    ['ゔ', 'v'],
-    ['ん', 'n'],
-    ['は', 'ha'],
-    ['ま', 'ma'],
-    ['や', 'ya'],
-    ['ら', 'ra'],
-    ['ひ', 'hi'],
-    ['み', 'mi'],
-    ['り', 'ri'],
-    ['ふ', 'fu'],
-    ['む', 'mu'],
-    ['ゆ', 'yu'],
-    ['る', 'ru'],
-    ['へ', 'he'],
-    ['め', 'me'],
-    ['れ', 're'],
-    ['ほ', 'ho'],
-    ['も', 'mo'],
-    ['よ', 'yo'],
-    ['ろ', 'ro'],
-    ['わ', 'wa'],
     ['が', 'ga'],
-    ['ざ', 'za'],
-    ['だ', 'da'],
-    ['ば', 'ba'],
-    ['ぱ', 'pa'],
     ['ぎ', 'gi'],
-    ['じ', 'ji'],
-    ['ぢ', 'dji'],
-    ['び', 'bi'],
-    ['ぴ', 'pi'],
     ['ぐ', 'gu'],
-    ['ず', 'zu'],
-    ['づ', 'dzu'],
-    ['ぶ', 'bu'],
-    ['ぷ', 'pu'],
     ['げ', 'ge'],
-    ['ぜ', 'ze'],
-    ['で', 'de'],
-    ['べ', 'be'],
-    ['ぺ', 'pe'],
-    ['を', 'wo'],
-    ['ご', 'go'],
-    ['ぞ', 'zo'],
-    ['ど', 'do'],
-    ['ぼ', 'bo'],
-    ['ぽ', 'po']
+    ['ご', 'go']
   ]
 ]
 
-export { Hiragana }
+// [
+//   ['さ', 'sa'],
+//   ['た', 'ta'],
+//   ['な', 'na'],
+//   ['し', 'shi'],
+//   ['ち', 'chi'],
+//   ['に', 'ni'],
+//   ['す', 'su'],
+//   ['つ', 'tsu'],
+//   ['ぬ', 'nu'],
+//   ['せ', 'se'],
+//   ['て', 'te'],
+//   ['ね', 'ne'],
+//   ['そ', 'so'],
+//   ['と', 'to'],
+//   ['の', 'no'],
+//   ['ゔ', 'v'],
+//   ['ん', 'n'],
+//   ['は', 'ha'],
+//   ['ま', 'ma'],
+//   ['や', 'ya'],
+//   ['ら', 'ra'],
+//   ['ひ', 'hi'],
+//   ['み', 'mi'],
+//   ['り', 'ri'],
+//   ['ふ', 'fu'],
+//   ['む', 'mu'],
+//   ['ゆ', 'yu'],
+//   ['る', 'ru'],
+//   ['へ', 'he'],
+//   ['め', 'me'],
+//   ['れ', 're'],
+//   ['ほ', 'ho'],
+//   ['も', 'mo'],
+//   ['よ', 'yo'],
+//   ['ろ', 'ro'],
+//   ['わ', 'wa'],
+//   ['ざ', 'za'],
+//   ['だ', 'da'],
+//   ['ば', 'ba'],
+//   ['ぱ', 'pa'],
+//   ['じ', 'ji'],
+//   ['ぢ', 'dji'],
+//   ['び', 'bi'],
+//   ['ぴ', 'pi'],
+//   ['ず', 'zu'],
+//   ['づ', 'dzu'],
+//   ['ぶ', 'bu'],
+//   ['ぷ', 'pu'],
+//   ['ぜ', 'ze'],
+//   ['で', 'de'],
+//   ['べ', 'be'],
+//   ['ぺ', 'pe'],
+//   ['を', 'wo'],
+//   ['ぞ', 'zo'],
+//   ['ど', 'do'],
+//   ['ぼ', 'bo'],
+//   ['ぽ', 'po']
+// ]
+
+export { Hiragana, HIRAGANA }

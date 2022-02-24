@@ -38,8 +38,6 @@ const display = {
 
   unmarkError () {
     document.querySelector('#display').classList.remove('error')
-    document.querySelector('#display').classList.remove('error')
-    document.querySelector('#input').classList.remove('error')
     document.querySelector('#input').classList.remove('error')
   }
 }

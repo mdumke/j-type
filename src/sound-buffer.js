@@ -11,11 +11,14 @@ class SoundBuffer {
     this.data = await this.ctx.decodeAudioData(buf)
   }
 
-  play () {
+  async play () {
     const source = this.ctx.createBufferSource()
     source.connect(this.ctx.destination)
     source.buffer = this.data
-    source.start()
+    return new Promise(resolve => {
+      source.onended = resolve
+      source.start()
+    })
   }
 }
 
