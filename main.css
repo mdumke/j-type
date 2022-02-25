@@ -95,20 +95,14 @@ body {
     display: flex;
     flex-direction: column;
     width: 200px;
-}
-
-.player-left {
-    background-color: var(--blue);
-}
-
-.player-right {
-    background-color: var(--blue);
+    background-color: var(--dark-grey);
 }
 
 .powerbar {
-    height: 50px;
+    height: 20px;
     width: 100%;
-    background-color: var(--red);
+    background-color: var(--light-grey);
+    border-radius: 40px;
 }
 
 .box {

@@ -39,6 +39,18 @@ const display = {
   unmarkError () {
     document.querySelector('#display').classList.remove('error')
     document.querySelector('#input').classList.remove('error')
+  },
+
+  getHeroPowerbar () {
+    return document.querySelector('#left-player__powerbar')
+  },
+
+  getEnemyPowerbar () {
+    return document.querySelector('#right-player__powerbar')
+  },
+
+  setWidth (el, percentage) {
+    el.style.width = `${percentage}%`
   }
 }
 
