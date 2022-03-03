@@ -40,7 +40,7 @@ body {
 }
 
 .start-screen:active {
-    box-shadow: 2px 3px 6px #ccca;
+    box-shadow: 2px 3px 6px #222a;
 }
 
 .start-screen__content {

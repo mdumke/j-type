@@ -2,16 +2,17 @@ import { display } from '../display.js'
 import { audio } from '../audio.js'
 import { Hiragana } from '../hiragana.js'
 import { Player } from '../player.js'
+import { Timer } from '../timer.js'
 
 class PlayState {
   constructor () {
     this.hiragana = new Hiragana()
     this.stats = this.prepareStats(this.hiragana.chars)
+    this.timer = new Timer(this.handleTimeout.bind(this))
     this.target = null
     this.hero = null
     this.enemy = null
     this.startTime = null
-    this.interval = null
   }
 
   enter () {
@@ -33,19 +34,6 @@ class PlayState {
     this.reset()
   }
 
-  startTimer () {
-    this.interval = setInterval(() => this.handleTimeout(), 1500)
-  }
-
-  stopTimer () {
-    clearInterval(this.interval)
-  }
-
-  restartTimer () {
-    this.stopTimer()
-    this.startTimer()
-  }
-
   exit () {
     display.hide('play-screen')
   }
@@ -53,26 +41,26 @@ class PlayState {
   reset () {
     this.target = this.hiragana.sample()
     this.startTime = performance.now()
-    this.startTimer()
+    this.timer.start(2000, true)
     display.showTarget(this.target.hiragana)
     display.unmarkError()
     display.clearInput()
   }
 
   gameOver () {
-    this.stopTimer()
+    this.timer.stop()
     console.log('thats it for you buddy...')
     console.log(this.stats)
   }
 
   levelCleared () {
-    this.stopTimer()
+    this.timer.stop()
     console.log('congrats, lets move on...')
     console.log(this.stats)
   }
 
   async handleSuccess () {
-    this.stopTimer()
+    this.timer.stop()
     display.clearInput()
     display.unmarkError()
     this.updateStatsWithSuccess(
@@ -92,7 +80,7 @@ class PlayState {
   }
 
   async handleError () {
-    this.stopTimer()
+    this.timer.restart()
     display.markError()
     display.clearInput()
     this.updateStatsWithError(this.target.romaji)
@@ -104,7 +92,7 @@ class PlayState {
   }
 
   handleWait () {
-    this.restartTimer()
+    this.timer.restart()
     display.unmarkError()
   }
 
@@ -117,7 +105,7 @@ class PlayState {
   }
 
   async playFightSequence (winner) {
-    await winner.hit()
+    await Promise.all([winner.hit(), setTimeout(() => {}, 3000)])
     this.hero.reset()
     this.enemy.reset()
   }
