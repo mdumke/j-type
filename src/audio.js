@@ -32,13 +32,35 @@ const audio = {
     )
   },
 
+  async loadSFX () {
+    const basePath = 'assets/audio/'
+    const filenames = ['sword', 'knive']
+    const sounds = await Promise.all(
+      filenames.map(
+        name =>
+          new Promise(resolve => {
+            const sound = new SoundBuffer(audio.ctx, basePath + name + '.mp3')
+            sound.load().then(() => resolve({ [name]: sound }))
+          })
+      )
+    )
+
+    audio.sounds.sfx = sounds.reduce(
+      (acc, el) => ({
+        ...acc,
+        ...el
+      }),
+      {}
+    )
+  },
+
   async playVoiceRecording (romaji) {
     await audio.sounds.hiragana[romaji].play()
   },
 
   async init () {
     audio.ctx = new AudioContext()
-    await audio.loadHiragana()
+    await Promise.all([audio.loadHiragana(), audio.loadSFX()])
   }
 }
 

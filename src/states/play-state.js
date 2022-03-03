@@ -16,48 +16,74 @@ class PlayState {
 
   enter () {
     display.show('play-screen')
-    display.showWallpaper()
     display.focusInput()
-    this.hero = new Player(10, display.getHeroPowerbar())
-    this.enemy = new Player(10, display.getEnemyPowerbar())
+    this.hero = new Player({
+      health: 10,
+      weapon: 'a',
+      powerbar: display.getHeroPowerbar(),
+      isHero: true
+    })
+    this.enemy = new Player({
+      health: 50,
+      weapon: 'b',
+      powerbar: display.getEnemyPowerbar(),
+      isHero: false
+    })
     this.setInputListener()
     this.reset()
   }
 
+  startTimer () {
+    this.interval = setInterval(() => this.handleTimeout(), 1500)
+  }
+
+  stopTimer () {
+    clearInterval(this.interval)
+  }
+
+  restartTimer () {
+    this.stopTimer()
+    this.startTimer()
+  }
+
   exit () {
     display.hide('play-screen')
-    display.hideWallpaper()
   }
 
   reset () {
     this.target = this.hiragana.sample()
     this.startTime = performance.now()
-    this.interval = setInterval(() => this.handleTimeout(), 2000)
+    this.startTimer()
     display.showTarget(this.target.hiragana)
     display.unmarkError()
     display.clearInput()
   }
 
   gameOver () {
-    clearInterval(this.interval)
+    this.stopTimer()
     console.log('thats it for you buddy...')
+    console.log(this.stats)
   }
 
   levelCleared () {
+    this.stopTimer()
     console.log('congrats, lets move on...')
+    console.log(this.stats)
   }
 
   async handleSuccess () {
-    clearInterval(this.interval)
+    this.stopTimer()
     display.clearInput()
     display.unmarkError()
     this.updateStatsWithSuccess(
       this.target.romaji,
       performance.now() - this.startTime
     )
-    console.log(this.stats)
-    await audio.playVoiceRecording(this.target.romaji)
     this.enemy.takeHit()
+    await Promise.all([
+      audio.playVoiceRecording(this.target.romaji),
+      this.playFightSequence(this.hero)
+    ])
     if (this.enemy.isDefeated()) {
       this.levelCleared()
     } else {
@@ -65,25 +91,35 @@ class PlayState {
     }
   }
 
-  handleError () {
+  async handleError () {
+    this.stopTimer()
     display.markError()
     display.clearInput()
     this.updateStatsWithError(this.target.romaji)
     this.hero.takeHit()
+    await this.playFightSequence(this.enemy)
     if (this.hero.isDefeated()) {
       this.gameOver()
     }
   }
 
   handleWait () {
+    this.restartTimer()
     display.unmarkError()
   }
 
-  handleTimeout () {
+  async handleTimeout () {
     this.hero.takeHit()
+    await this.playFightSequence(this.enemy)
     if (this.hero.isDefeated()) {
       this.gameOver()
     }
+  }
+
+  async playFightSequence (winner) {
+    await winner.hit()
+    this.hero.reset()
+    this.enemy.reset()
   }
 
   step () {

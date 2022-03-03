@@ -42,11 +42,11 @@ const display = {
   },
 
   getHeroPowerbar () {
-    return document.querySelector('#left-player__powerbar')
+    return document.querySelector('#powerbar-left')
   },
 
   getEnemyPowerbar () {
-    return document.querySelector('#right-player__powerbar')
+    return document.querySelector('#powerbar-right')
   },
 
   setWidth (el, percentage) {

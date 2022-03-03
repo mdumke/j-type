@@ -12,7 +12,7 @@
 <body>
   <div id="container" class="container">
 
-    <div id="start-screen" class="start-screen">
+    <div id="start-screen" class="screen start-screen">
       <div class="start-screen__content">
         <h1 class="title">J-TYPE</h1>
         <p class="sub-title">Hiragana</p>
@@ -20,17 +20,18 @@
       <div id="loader"></div>
     </div>
 
-    <div id="play-screen" class="play-screen hide">
+    <div id="play-screen" class="screen play-screen hide">
       <div class="play-screen__content">
-        <div class="arena">
-          <div id="player-left" class="player player-left">
-            <div id="left-player__powerbar" class="powerbar left_player__powerbar"></div>
-            <div id="left-player__box" class="box left_player__box"></div>
+        <div class="arena-container">
+          <div class="powerbar-section">
+            <div class="powerbar-container">
+              <div id="powerbar-left" class="powerbar powerbar-left"></div>
+            </div>
+            <div class="powerbar-container">
+              <div id="powerbar-right" class="powerbar powerbar-right"></div>
+            </div>
           </div>
-          <div id="player-right" class="player player-right">
-            <div id="right-player__powerbar" class="powerbar right_player__powerbar"></div>
-            <div id="right-player__box" class="box right_player__box"></div>
-          </div>
+          <canvas id="arena" width="500px" height="250px"></canvas>
         </div>
         <div class="character-area">
           <div class="display-outer">
