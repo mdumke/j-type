@@ -1,23 +1,25 @@
-const stateMachine = {
-  current: null,
-  states: {},
+class StateMachine {
+  constructor () {
+    this.current = null
+    this.states = {}
+  }
 
   register (key, state) {
-    if (key in stateMachine.states) {
+    if (key in this.states) {
       throw new Error(`state name already registered: ${key}`)
     }
 
-    stateMachine.states[key] = state
-  },
+    this.states[key] = state
+  }
 
   change (key) {
-    if (stateMachine.current !== null) {
-      stateMachine.current.exit()
+    if (this.current !== null) {
+      this.current.exit()
     }
 
-    stateMachine.current = stateMachine.states[key]
-    stateMachine.current.enter()
+    this.current = this.states[key]
+    this.current.enter()
   }
 }
 
-export { stateMachine }
+export { StateMachine }

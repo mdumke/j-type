@@ -2,12 +2,12 @@ import { display } from './display.js'
 import { audio } from './audio.js'
 import { images } from './images.js'
 import { arena } from './arena.js'
-import { stateMachine } from './states/state-machine.js'
+import { StateMachine } from './states/state-machine.js'
 import { PlayState } from './states/play-state.js'
 
 class Game {
-  run () {
-    stateMachine.change('play')
+  constructor () {
+    this.stateMachine = new StateMachine()
   }
 
   async init () {
@@ -16,16 +16,21 @@ class Game {
     await images.init()
     await arena.init()
 
-    stateMachine.register('play', new PlayState())
+    this.stateMachine.register('play', new PlayState())
 
     display.hide('start-screen')
   }
 
-  static async start () {
-    const game = new Game()
-    await game.init()
-    game.run()
+  switchState (state) {
+    this.stateMachine.change(state)
+  }
+
+  async start () {
+    await this.init()
+    this.switchState('play')
   }
 }
 
-export { Game }
+const game = new Game()
+
+export { game }
