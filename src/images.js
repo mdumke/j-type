@@ -2,12 +2,42 @@ const images = {
   basePath: 'assets/images',
 
   list: [
-    { name: 'fighterA1', fileName: 'fighter-a1.png' },
-    { name: 'fighterA2', fileName: 'fighter-a2.png' },
-    { name: 'fighterB1', fileName: 'fighter-b1.png' },
-    { name: 'fighterB2', fileName: 'fighter-b2.png' },
-    { name: 'fighterC1', fileName: 'fighter-c1.png' },
-    { name: 'fighterC2', fileName: 'fighter-c2.png' }
+    {
+      name: 'fighter-sword-waiting',
+      fileName: 'fighter-a1.png',
+      offsetX: 0,
+      offsetY: 0
+    },
+    {
+      name: 'fighter-sword-striking',
+      fileName: 'fighter-a2.png',
+      offsetX: 0,
+      offsetY: 0
+    },
+    {
+      name: 'fighter-knive-waiting',
+      fileName: 'fighter-b1.png',
+      offsetX: 0,
+      offsetY: 25
+    },
+    {
+      name: 'fighter-knive-striking',
+      fileName: 'fighter-b2.png',
+      offsetX: -250,
+      offsetY: -15
+    },
+    {
+      name: 'fighter-stick-waiting',
+      fileName: 'fighter-c1.png',
+      offsetX: 0,
+      offsetY: 0
+    },
+    {
+      name: 'fighter-stick-striking',
+      fileName: 'fighter-c2.png',
+      offsetX: 0,
+      offsetY: 0
+    }
   ],
 
   init: async () => {
@@ -19,6 +49,8 @@ const images = {
             images[img.name].onload = resolve
             images[img.name].onerror = reject
             images[img.name].fileName = img.fileName
+            images[img.name].offsetX = img.offsetX
+            images[img.name].offsetY = img.offsetY
             images[img.name].src = `${images.basePath}/${img.fileName}`
           })
       )

@@ -92,7 +92,6 @@ body {
     margin: 0 auto;
     width: 500px;
     height: 250px;
-    border-bottom: 1px solid black;
 }
 
 .powerbar-section {
@@ -136,7 +135,6 @@ body {
 }
 
 .display-inner {
-    font-size: 15rem;
     margin: auto;
     color: var(--white);
 }

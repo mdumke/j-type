@@ -1,175 +1,104 @@
+import { State } from './state.js'
+import { UniformRandom } from '../agents/uniform-random.js'
+import { levelManager } from '../level-manager.js'
+import { ui } from '../ui.js'
 import { display } from '../display.js'
 import { audio } from '../audio.js'
-import { Hiragana } from '../hiragana.js'
-import { Player } from '../player.js'
 import { Timer } from '../timer.js'
-import { game } from '../game.js'
 
-class PlayState {
+class PlayState extends State {
   constructor () {
-    this.hiragana = new Hiragana()
-    this.stats = this.prepareStats(this.hiragana.chars)
+    super()
     this.timer = new Timer(this.handleTimeout.bind(this))
-    this.target = null
-    this.hero = null
-    this.enemy = null
-    this.startTime = null
+    this.evaluateInput = this.evaluateInput.bind(this)
+    this.ignoreInput = false
+    this.stateMachine
+    this.hiragana
+    this.agent
+    this.target
   }
 
-  enter () {
+  enter ({ level, stateMachine }) {
     display.show('play-screen')
-    display.focusInput()
-    this.hero = new Player({
-      health: 10,
-      weapon: 'a',
-      powerbar: display.getHeroPowerbar(),
-      isHero: true
-    })
-    this.enemy = new Player({
-      health: 50,
-      weapon: 'b',
-      powerbar: display.getEnemyPowerbar(),
-      isHero: false
-    })
-    this.setInputListener()
-    this.reset()
+    this.stateMachine = stateMachine
+    this.hero = levelManager.getHero(level)
+    this.enemy = levelManager.getEnemy(level)
+    this.hiragana = levelManager.getHiragana(level)
+    this.agent = new UniformRandom(this.hiragana)
+    this.level = level
+    this.selectTarget()
+    this.registerListener()
+  }
+
+  selectTarget () {
+    this.target = this.agent.choose()
+    this.ignoreInput = false
+    this.timer.start(2500, true)
+    display.showTarget(this.target.hiragana)
+    ui.clearInput()
+    ui.focusInput()
+    ui.renderWaitState(this.hero, this.enemy)
   }
 
   exit () {
-    display.hide('play-screen')
+    this.removeListener()
   }
 
-  reset () {
-    this.target = this.hiragana.sample()
-    this.startTime = performance.now()
-    this.timer.start(2000, true)
-    display.showTarget(this.target.hiragana)
-    display.unmarkError()
-    display.clearInput()
-  }
+  async evaluateInput () {
+    if (this.ignoreInput) return
 
-  gameOver () {
-    this.timer.stop()
-    console.log('thats it for you buddy...')
-    console.log(this.stats)
-  }
+    const guess = ui.getInput()
+    const goal = this.target.romaji
 
-  levelCleared () {
-    this.timer.stop()
-    console.log('congrats, lets move on...')
-    console.log(this.stats)
+    if (guess === goal) {
+      await this.handleSuccess()
+    } else if (guess !== goal.slice(0, guess.length)) {
+      await this.handleError()
+    } else {
+      this.handleContinue()
+    }
   }
 
   async handleSuccess () {
     this.timer.stop()
-    display.clearInput()
-    display.unmarkError()
-    this.updateStatsWithSuccess(
-      this.target.romaji,
-      performance.now() - this.startTime
-    )
-    this.enemy.takeHit()
+    this.ignoreInput = true
+    this.enemy.hit()
     await Promise.all([
-      audio.playVoiceRecording(this.target.romaji),
-      this.playFightSequence(this.hero)
+      ui.animateHeroStrike(this.hero, this.enemy),
+      audio.playVoiceRecording(this.target.romaji)
     ])
-    if (this.enemy.isDefeated()) {
-      this.levelCleared()
-    } else {
-      this.reset()
-    }
+    this.selectTarget()
   }
 
   async handleError () {
     this.timer.restart()
-    display.markError()
-    display.clearInput()
-    this.updateStatsWithError(this.target.romaji)
-    this.hero.takeHit()
-    await this.playFightSequence(this.enemy)
-    if (this.hero.isDefeated()) {
-      this.gameOver()
-    }
+    this.ignoreInput = true
+    this.hero.hit()
+    await ui.animateEnemyStrike(this.enemy, this.hero)
+    this.ignoreInput = false
+    ui.renderWaitState(this.hero, this.enemy)
+    ui.clearInput()
   }
 
-  handleWait () {
+  handleContinue () {
     this.timer.restart()
-    display.unmarkError()
+    ui.renderWaitState(this.hero, this.enemy)
   }
 
   async handleTimeout () {
-    this.hero.takeHit()
-    await this.playFightSequence(this.enemy)
-    if (this.hero.isDefeated()) {
-      this.gameOver()
-    }
+    this.ignoreInput = true
+    this.hero.hit()
+    await ui.animateEnemyStrike(this.enemy, this.hero)
+    this.ignoreInput = false
+    ui.renderWaitState(this.hero, this.enemy)
   }
 
-  async playFightSequence (winner) {
-    await Promise.all([winner.hit(), setTimeout(() => {}, 3000)])
-    this.hero.reset()
-    this.enemy.reset()
+  registerListener () {
+    ui.inputEl.addEventListener('input', this.evaluateInput)
   }
 
-  step () {
-    const guess = this.getInput()
-    const goal = this.target.romaji
-
-    if (guess === goal) {
-      this.handleSuccess()
-    } else if (guess !== goal.slice(0, guess.length)) {
-      this.handleError()
-    } else {
-      this.handleWait()
-    }
-  }
-
-  getInput () {
-    return document.querySelector('#input').value
-  }
-
-  setInputListener () {
-    document
-      .querySelector('#input')
-      .addEventListener('input', this.step.bind(this))
-  }
-
-  prepareStats (hiragana) {
-    return hiragana
-      .map(([, romaji]) => romaji)
-      .reduce(
-        (memo, chars) => ({
-          ...memo,
-          [chars]: {
-            mean: null,
-            n: 0,
-            errors: 0
-          }
-        }),
-        {}
-      )
-  }
-
-  updateStatsWithSuccess (char, dt) {
-    const { mean, n, errors } = this.stats[char]
-
-    if (n === null) {
-      this.stats[char] = {
-        mean: dt,
-        n: 1,
-        errors
-      }
-    } else {
-      this.stats[char] = {
-        mean: (mean * n) / (n + 1) + dt / (n + 1),
-        n: n + 1,
-        errors
-      }
-    }
-  }
-
-  updateStatsWithError (char) {
-    this.stats[char].errors++
+  removeListener () {
+    ui.inputEl.removeEventListener('input', this.evaluateInput)
   }
 }
 

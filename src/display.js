@@ -23,8 +23,10 @@ const display = {
     document.querySelector('#input').focus()
   },
 
-  showTarget (hiragana) {
-    document.querySelector('#display').innerHTML = hiragana
+  showTarget (hiragana, size = '13rem') {
+    const el = document.querySelector('#display')
+    el.style.fontSize = size
+    el.innerHTML = hiragana
   },
 
   clearInput () {

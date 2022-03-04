@@ -1,10 +1,10 @@
-import { game } from './game.js'
+import { Game } from './game.js'
 
 const main = async () => {
   document.querySelector('#start-screen').addEventListener(
     'click',
     async () => {
-      game.start()
+      new Game().start()
     },
     { once: true }
   )

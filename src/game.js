@@ -1,36 +1,19 @@
-import { display } from './display.js'
-import { audio } from './audio.js'
-import { images } from './images.js'
-import { arena } from './arena.js'
 import { StateMachine } from './states/state-machine.js'
 import { PlayState } from './states/play-state.js'
+import { InitState } from './states/init-state.js'
 
 class Game {
   constructor () {
     this.stateMachine = new StateMachine()
   }
 
-  async init () {
-    display.showLoader()
-    await audio.init()
-    await images.init()
-    await arena.init()
-
+  start () {
     this.stateMachine.register('play', new PlayState())
-
-    display.hide('start-screen')
-  }
-
-  switchState (state) {
-    this.stateMachine.change(state)
-  }
-
-  async start () {
-    await this.init()
-    this.switchState('play')
+    this.stateMachine.register('init', new InitState())
+    this.stateMachine.change('init', {
+      stateMachine: this.stateMachine
+    })
   }
 }
 
-const game = new Game()
-
-export { game }
+export { Game }

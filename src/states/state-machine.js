@@ -12,13 +12,17 @@ class StateMachine {
     this.states[key] = state
   }
 
-  change (key) {
+  change (key, data) {
+    if (!(key in this.states)) {
+      throw new Error(`no state registered with key: ${key}`)
+    }
+
     if (this.current !== null) {
       this.current.exit()
     }
 
     this.current = this.states[key]
-    this.current.enter()
+    this.current.enter(data)
   }
 }
 

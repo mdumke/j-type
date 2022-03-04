@@ -10,12 +10,12 @@ const audio = {
   async loadHiragana () {
     const basePath = 'assets/audio/'
     const format = '.ogg'
-    const hiragana = HIRAGANA.flatMap(level => level).map(([h, r]) => r)
+    const hiragana = Object.values(HIRAGANA)
 
     const sounds = await Promise.all(
       hiragana.map(
         char =>
-          new Promise(resolve => {
+          new Promise((resolve, reject) => {
             const filename = basePath + char + format
             const sound = new SoundBuffer(audio.ctx, filename)
             sound.load().then(() => resolve({ [char]: sound }))
