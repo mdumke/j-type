@@ -29,11 +29,10 @@ body {
 }
 
 .start-screen {
-    display: flex;
+    position: relative;
     margin: auto;
     color: var(--gb-4);
-    position: relative;
-    cursor: pointer;
+    cursor: none;
 }
 
 .start-screen:active {
@@ -41,16 +40,34 @@ body {
 }
 
 .start-screen__content {
+    display: flex;
+    justify-content: space-around;
+    flex-direction: column;
     margin: auto;
     text-align: center;
 }
 
 .title {
-    font-size: 5rem;
+    position: absolute;
+    top: 142px;
+    right: 31px;
+    font-size: 4rem;
+    color: var(--gb-1)
 }
 
 .sub-title {
     font-size: 1.5rem;
+    position: absolute;
+    top: 208px;
+    right: 31px;
+    color: var(--gb-1)
+}
+
+.title-image {
+    display: block;
+    position: absolute;
+    bottom: 2px;
+    left: 50px;
 }
 
 .loader {
@@ -137,13 +154,12 @@ body {
 
 .input {
     margin: 0 auto;
-    width: 250px;
     text-align: center;
     font-size: 1.3rem;
     width: 100%;
     padding: 5px;
     border: none;
-    border-bottom: 1px solid var(--gb-4);
+    border-bottom: 3px solid var(--gb-4);
     background-color: var(--gb-2);
     color: var(--gb-4);
     caret-color: var(--gb-2);
@@ -151,6 +167,15 @@ body {
 
 .input:focus-visible {
     outline: none;
+}
+
+.instructions {
+    margin: 0 auto;
+    text-align: center;
+    font-size: 1.3rem;
+    width: 100%;
+    padding: 5px;
+    color: var(--gb-4);
 }
 
 .error {

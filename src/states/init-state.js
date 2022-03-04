@@ -12,7 +12,7 @@ class InitState extends State {
     await images.init()
     await arena.init()
     await ui.init()
-    stateMachine.change('play', { stateMachine, level: 0 })
+    stateMachine.change('intro', { stateMachine, level: 0 })
   }
 
   exit () {

@@ -14,8 +14,18 @@
 
     <div id="start-screen" class="screen start-screen">
       <div class="start-screen__content">
-        <h1 class="title">J-TYPE</h1>
-        <p class="sub-title">Hiragana</p>
+        <div class="arena-container">
+          <img class="title-image" src="/assets/images/fighter-a1.png" alt="fighter-siluette">
+          <h1 class="title">J-TYPE</h1>
+          <p class="sub-title">Hiragana</p>
+        </div>
+
+        <div class="character-area">
+          <div class="instructions">
+            <div class="display-outer"></div>
+            Press SPACE
+          </div>
+        </div>
       </div>
       <div id="loader"></div>
     </div>
@@ -38,6 +48,7 @@
             <div id="display" class="display-inner"></div>
           </div>
           <input type="text" class="input" id="input" spellcheck="false" autofocus>
+          <div id="instructions" class="instructions hide"></div>
         </div>
       </div>
     </div>

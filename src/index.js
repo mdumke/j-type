@@ -1,8 +1,8 @@
 import { Game } from './game.js'
 
 const main = async () => {
-  document.querySelector('#start-screen').addEventListener(
-    'click',
+  window.addEventListener(
+    'keydown',
     async () => {
       new Game().start()
     },

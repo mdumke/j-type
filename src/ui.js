@@ -7,6 +7,7 @@ import { PLAYER_WAITING, PLAYER_STRIKING } from './constants.js'
 
 const ui = {
   inputEl: null,
+  instructionsEl: null,
 
   clearInput () {
     ui.inputEl.value = ''
@@ -28,6 +29,15 @@ const ui = {
     ui.inputEl.focus()
   },
 
+  showInstructions (text) {
+    display.show('instructions')
+    ui.instructionsEl.innerHTML = text
+  },
+
+  hideInstructions () {
+    display.hide('instructions')
+  },
+
   renderHeroPowerbar (fraction) {
     display.setWidth(display.getHeroPowerbar(), fraction * 100)
   },
@@ -42,6 +52,10 @@ const ui = {
 
   renderEnemyDefeated () {
     arena.drawImage(images['fighter-defeated'], 280, 160, true)
+  },
+
+  renderOnlyHero (player, state) {
+    arena.drawImage(images[`fighter-${player.weapon}-${state}`], 50, 75)
   },
 
   renderHero (player, state) {
@@ -88,6 +102,7 @@ const ui = {
 
   async init () {
     ui.inputEl = document.querySelector('#input')
+    ui.instructionsEl = document.querySelector('#instructions')
   }
 }
 

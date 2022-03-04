@@ -18,14 +18,15 @@ class PlayState extends State {
     this.target
   }
 
-  enter ({ level, stateMachine }) {
+  enter ({ level, hero, enemy, stateMachine }) {
     display.show('play-screen')
+    ui.showInput()
+    this.level = level
+    this.hero = hero
+    this.enemy = enemy
     this.stateMachine = stateMachine
-    this.hero = levelManager.getHero(level)
-    this.enemy = levelManager.getEnemy(level)
     this.hiragana = levelManager.getHiragana(level)
     this.agent = new UniformRandom(this.hiragana)
-    this.level = level
     this.selectTarget()
     this.registerListener()
   }
@@ -47,7 +48,7 @@ class PlayState extends State {
     this.timer.stop()
   }
 
-  async evaluateInput () {
+  async evaluateInput (e) {
     audio.sounds.sfx['typing'].play()
 
     if (this.ignoreInput) return
