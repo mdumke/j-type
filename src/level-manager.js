@@ -9,14 +9,14 @@ const levelManager = {
 
   getHero (level) {
     return new Player({
-      health: 5,
+      health: 5 + 5 * level,
       weapon: 'sword'
     })
   },
 
   getEnemy (level) {
     return new Player({
-      health: 5,
+      health: 10 + 20 * level,
       weapon: 'knive'
     })
   },

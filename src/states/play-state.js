@@ -35,16 +35,21 @@ class PlayState extends State {
     this.ignoreInput = false
     this.timer.start(2500, true)
     display.showTarget(this.target.hiragana)
+    display.unmarkError()
     ui.clearInput()
     ui.focusInput()
     ui.renderWaitState(this.hero, this.enemy)
   }
 
   exit () {
+    display.hide('play-screen')
     this.removeListener()
+    this.timer.stop()
   }
 
   async evaluateInput () {
+    audio.sounds.sfx['typing'].play()
+
     if (this.ignoreInput) return
 
     const guess = ui.getInput()
@@ -68,20 +73,38 @@ class PlayState extends State {
       audio.playVoiceRecording(this.target.romaji)
     ])
     this.selectTarget()
+
+    if (this.enemy.isDefeated()) {
+      this.stateMachine.change('result', {
+        win: true,
+        level: this.level,
+        stateMachine: this.stateMachine
+      })
+    }
   }
 
   async handleError () {
     this.timer.restart()
+    display.markError()
     this.ignoreInput = true
     this.hero.hit()
     await ui.animateEnemyStrike(this.enemy, this.hero)
     this.ignoreInput = false
     ui.renderWaitState(this.hero, this.enemy)
     ui.clearInput()
+
+    if (this.hero.isDefeated()) {
+      this.stateMachine.change('result', {
+        win: false,
+        level: this.level,
+        stateMachine: this.stateMachine
+      })
+    }
   }
 
   handleContinue () {
     this.timer.restart()
+    display.unmarkError()
     ui.renderWaitState(this.hero, this.enemy)
   }
 
@@ -91,6 +114,14 @@ class PlayState extends State {
     await ui.animateEnemyStrike(this.enemy, this.hero)
     this.ignoreInput = false
     ui.renderWaitState(this.hero, this.enemy)
+
+    if (this.hero.isDefeated()) {
+      this.stateMachine.change('result', {
+        win: false,
+        level: this.level,
+        stateMachine: this.stateMachine
+      })
+    }
   }
 
   registerListener () {

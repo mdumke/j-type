@@ -35,12 +35,12 @@ const display = {
 
   markError () {
     document.querySelector('#display').classList.add('error')
-    document.querySelector('#input').classList.add('error')
+    // document.querySelector('#input').classList.add('error')
   },
 
   unmarkError () {
     document.querySelector('#display').classList.remove('error')
-    document.querySelector('#input').classList.remove('error')
+    // document.querySelector('#input').classList.remove('error')
   },
 
   getHeroPowerbar () {

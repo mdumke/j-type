@@ -11,6 +11,14 @@ const ui = {
     ui.inputEl.value = ''
   },
 
+  hideInput () {
+    display.hide('input')
+  },
+
+  showInput () {
+    display.show('input')
+  },
+
   getInput () {
     return ui.inputEl.value
   },

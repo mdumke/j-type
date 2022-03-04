@@ -1,10 +1,14 @@
 :root {
     --white: #fff;
     --light-grey: #dde1e4;
-    --blue: #8da8bd;
     --red: #c23700;
     --green: rgb(138, 168, 110);
     --dark-grey: #161d23;
+
+    --gb-1: #181322;
+    --gb-2: #4b372c;
+    --gb-3: #a2423a;
+    --gb-4: #cdc1a7;
 }
 
 * {
@@ -14,9 +18,8 @@
 }
 
 body {
-    /* font-family: Arial, Helvetica, sans-serif; */
     font-family: monospace;
-    background-color: var(--dark-grey);
+    background-color: var(--gb-1);
 }
 
 .container {
@@ -28,13 +31,13 @@ body {
     border-radius: 2px;
     width: 500px;
     height: 700px;
+    background-color: var(--gb-2);
 }
 
 .start-screen {
     display: flex;
     margin: auto;
-    background-color: var(--green);
-    color: var(--white);
+    color: var(--gb-4);
     position: relative;
     cursor: pointer;
 }
@@ -61,7 +64,7 @@ body {
     bottom: 10px;
     height: 10px;
     width: 100%;
-    background-color: var(--red);
+    background-color: var(--gb-3);
     animation-duration: 2s;
     animation-name: loading;
 }
@@ -104,7 +107,7 @@ body {
 }
 
 .powerbar-container {
-    background-color: var(--red);
+    background-color: var(--gb-3);
     width: 45%;
     border-radius: 20px;
 }
@@ -112,19 +115,18 @@ body {
 .powerbar {
     width: 100%;
     height: 10px;
-    background-color: var(--green);
+    background-color: var(--gb-2);
     border-radius: 20px;
 }
 
 .arena-container {
-    background-color: var(--light-grey);
+    background-color: var(--gb-4);
 }
 
 .character-area {
     margin: 0 auto;
     padding: 15px;
     width: 500px;
-    background-color: var(--green);
 }
 
 .display-outer {
@@ -136,7 +138,7 @@ body {
 
 .display-inner {
     margin: auto;
-    color: var(--white);
+    color: var(--gb-4);
 }
 
 .input {
@@ -144,11 +146,12 @@ body {
     width: 250px;
     text-align: center;
     font-size: 1.3rem;
-    color: #333;
     width: 100%;
     padding: 5px;
-    border: 1px solid #ddd;
+    border: 1px solid var(--gb-1);
     border-radius: 4px;
+    background-color: var(--gb-2);
+    color: var(--gb-4);
 }
 
 .input:focus-visible {
@@ -156,7 +159,7 @@ body {
 }
 
 .error {
-    color: var(--red);
+    color: var(--gb-3);
 }
 
 .hide {
