@@ -1,10 +1,4 @@
 :root {
-    --white: #fff;
-    --light-grey: #dde1e4;
-    --red: #c23700;
-    --green: rgb(138, 168, 110);
-    --dark-grey: #161d23;
-
     --gb-1: #181322;
     --gb-2: #4b372c;
     --gb-3: #a2423a;
@@ -125,7 +119,7 @@ body {
 
 .character-area {
     margin: 0 auto;
-    padding: 15px;
+    padding: 0 15px;
     width: 500px;
 }
 
@@ -148,10 +142,11 @@ body {
     font-size: 1.3rem;
     width: 100%;
     padding: 5px;
-    border: 1px solid var(--gb-1);
-    border-radius: 4px;
+    border: none;
+    border-bottom: 1px solid var(--gb-4);
     background-color: var(--gb-2);
     color: var(--gb-4);
+    caret-color: var(--gb-2);
 }
 
 .input:focus-visible {

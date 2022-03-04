@@ -76,8 +76,9 @@ class PlayState extends State {
 
     if (this.enemy.isDefeated()) {
       this.stateMachine.change('result', {
-        win: true,
         level: this.level,
+        hero: this.hero,
+        enemy: this.enemy,
         stateMachine: this.stateMachine
       })
     }
@@ -95,8 +96,9 @@ class PlayState extends State {
 
     if (this.hero.isDefeated()) {
       this.stateMachine.change('result', {
-        win: false,
         level: this.level,
+        hero: this.hero,
+        enemy: this.enemy,
         stateMachine: this.stateMachine
       })
     }
@@ -117,8 +119,9 @@ class PlayState extends State {
 
     if (this.hero.isDefeated()) {
       this.stateMachine.change('result', {
-        win: false,
         level: this.level,
+        hero: this.hero,
+        enemy: this.enemy,
         stateMachine: this.stateMachine
       })
     }

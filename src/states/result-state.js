@@ -3,18 +3,26 @@ import { display } from '../display.js'
 import { ui } from '../ui.js'
 
 class ResultState extends State {
-  enter ({ win, level, stateMachine }) {
+  enter ({ hero, enemy, level, stateMachine }) {
     display.show('play-screen')
     display.unmarkError()
-    display.showTarget(`YOU ${win ? 'WIN' : 'LOSE'}!`, '4rem')
+    display.showTarget(`YOU ${enemy.isDefeated() ? 'WIN' : 'LOSE'}!`, '4rem')
     ui.hideInput()
+
+    hero.isDefeated()
+      ? ui.animateHeroDefeated(hero, enemy)
+      : ui.animateEnemyDefeated(enemy, hero)
 
     setTimeout(() => {
       stateMachine.change('play', {
-        level: level + win,
+        level: level + enemy.isDefeated(),
         stateMachine
       })
     }, 5000)
+  }
+
+  exit () {
+    ui.showInput()
   }
 }
 

@@ -37,6 +37,12 @@ const images = {
       fileName: 'fighter-c2.png',
       offsetX: 0,
       offsetY: 0
+    },
+    {
+      name: 'fighter-defeated',
+      fileName: 'fighter-defeated.png',
+      offsetX: 0,
+      offsetY: 0
     }
   ],
 
