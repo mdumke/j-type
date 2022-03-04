@@ -1,8 +1,8 @@
-import { display } from '../../display.js'
-import { audio } from '../../audio.js'
-import { Hiragana } from '../../hiragana.js'
-import { Player } from '../../player.js'
-import { Timer } from '../../timer.js'
+import { display } from './display.js'
+import { audio } from './audio.js'
+import { Hiragana } from './hiragana.js'
+import { Player } from './player.js'
+import { Timer } from './timer.js'
 
 class PlayState {
   constructor () {
