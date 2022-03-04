@@ -1,6 +1,7 @@
 import { State } from './state.js'
 import { display } from '../display.js'
 import { ui } from '../ui.js'
+import { audio } from '../audio.js'
 import { PLAYER_WAITING } from '../constants.js'
 
 class VictoryState extends State {
@@ -13,16 +14,15 @@ class VictoryState extends State {
   enter ({ hero, stateMachine }) {
     this.stateMachine = stateMachine
     this.registerListeners()
+    audio.sounds.sfx.koto.play()
     ui.clearArena()
     ui.renderOnlyHero(hero, PLAYER_WAITING)
     display.showTarget(
       `
-      <h1>Victory!</h1>
+      <h1 class="victory-title">Victory!</h1>
       <br />
-      <div>
+      <div class="victory-message">
         You have made it through the first levels!
-        <br />
-        <br />
         There is more to come. But now it's time to rest.
         <br />
         <br />

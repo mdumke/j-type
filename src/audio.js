@@ -8,14 +8,14 @@ const audio = {
 
   // load voice recordings and set them as audio.sounds.hiragana
   async loadHiragana () {
-    const basePath = 'assets/audio/'
+    const basePath = 'assets/audio/voice-recordings/'
     const format = '.ogg'
     const hiragana = Object.values(HIRAGANA)
 
     const sounds = await Promise.all(
       hiragana.map(
         char =>
-          new Promise((resolve, reject) => {
+          new Promise(resolve => {
             const filename = basePath + char + format
             const sound = new SoundBuffer(audio.ctx, filename)
             sound.load().then(() => resolve({ [char]: sound }))
@@ -33,8 +33,17 @@ const audio = {
   },
 
   async loadSFX () {
-    const basePath = 'assets/audio/'
-    const filenames = ['sword', 'knive', 'stick', 'typing']
+    const basePath = 'assets/audio/sfx/'
+    const filenames = [
+      'sword',
+      'knive',
+      'stick',
+      'rails',
+      'koto',
+      'typing',
+      'hajime',
+      'shamisen'
+    ]
     const sounds = await Promise.all(
       filenames.map(
         name =>

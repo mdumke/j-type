@@ -5,7 +5,8 @@ import { pairwise } from './utils.js'
 const levelManager = {
   chars: [
     ['あ', 'え', 'い', 'お', 'う'],
-    ['か', 'が', 'き', 'ぎ', 'く', 'ぐ', 'け', 'げ', 'こ', 'ご']
+    ['か', 'が', 'き', 'ぎ', 'く', 'ぐ', 'け', 'げ', 'こ', 'ご'],
+    ['さ', 'ざ', 'し', 'じ', 'す', 'ず', 'せ', 'ぜ', 'そ', 'ぞ']
   ],
 
   getHero (level) {
@@ -18,7 +19,7 @@ const levelManager = {
   getEnemy (level) {
     return new Player({
       health: 2 + 2 * level,
-      weapon: ['knive', 'stick'][level]
+      weapon: ['knive', 'stick', 'rails'][level]
     })
   },
 

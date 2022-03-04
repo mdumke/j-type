@@ -41,7 +41,7 @@ class ResultState extends State {
     this.removeListeners()
 
     setTimeout(() => {
-      if (this.nextLevel < 2) {
+      if (this.nextLevel < 3) {
         this.stateMachine.change('intro', {
           level: this.nextLevel,
           stateMachine: this.stateMachine

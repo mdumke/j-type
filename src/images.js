@@ -4,39 +4,51 @@ const images = {
   list: [
     {
       name: 'fighter-sword-waiting',
-      fileName: 'fighter-a1.png',
+      fileName: 'fighter-sword-1.png',
       offsetX: 0,
       offsetY: 0
     },
     {
       name: 'fighter-sword-striking',
-      fileName: 'fighter-a2.png',
+      fileName: 'fighter-sword-2.png',
       offsetX: 0,
       offsetY: 0
     },
     {
       name: 'fighter-knive-waiting',
-      fileName: 'fighter-b1.png',
+      fileName: 'fighter-knive-1.png',
       offsetX: 0,
       offsetY: 25
     },
     {
       name: 'fighter-knive-striking',
-      fileName: 'fighter-b2.png',
+      fileName: 'fighter-knive-2.png',
       offsetX: -250,
       offsetY: -15
     },
     {
       name: 'fighter-stick-waiting',
-      fileName: 'fighter-c1.png',
+      fileName: 'fighter-stick-1.png',
       offsetX: -50,
       offsetY: 23
     },
     {
       name: 'fighter-stick-striking',
-      fileName: 'fighter-c2.png',
+      fileName: 'fighter-stick-2.png',
       offsetX: -230,
       offsetY: -15
+    },
+    {
+      name: 'fighter-rails-waiting',
+      fileName: 'fighter-rails-1.png',
+      offsetX: 0,
+      offsetY: 24
+    },
+    {
+      name: 'fighter-rails-striking',
+      fileName: 'fighter-rails-2.png',
+      offsetX: -210,
+      offsetY: 2
     },
     {
       name: 'fighter-defeated',

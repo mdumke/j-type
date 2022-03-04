@@ -2,6 +2,7 @@ import { State } from './state.js'
 import { display } from '../display.js'
 import { ui } from '../ui.js'
 import { levelManager } from '../level-manager.js'
+import { audio } from '../audio.js'
 
 class IntroState extends State {
   constructor () {
@@ -37,6 +38,8 @@ class IntroState extends State {
     ui.hideInstructions()
     ui.showInput()
     display.showTarget('')
+
+    audio.sounds.sfx.hajime.play()
 
     setTimeout(() => {
       this.stateMachine.change('play', {

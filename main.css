@@ -192,16 +192,19 @@ body {
     padding-right: 30px;
 }
 
+.victory-title {
+    text-align: center;
+}
+
+.victory-message {
+    text-align: center;
+    font-size: 1rem;
+}
+
 .error {
     color: var(--gb-3);
 }
 
 .hide {
     display: none;
-}
-
-.wallpaper {
-    background-image: url('assets/images/japanese-garden.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
 }

@@ -102,6 +102,7 @@ const ui = {
     arena.clear()
     ui.renderHero(hero, PLAYER_WAITING)
     ui.renderEnemyDefeated()
+    await audio.sounds.sfx.shamisen.play()
   },
 
   async init () {
