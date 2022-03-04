@@ -29,14 +29,14 @@ const images = {
     {
       name: 'fighter-stick-waiting',
       fileName: 'fighter-c1.png',
-      offsetX: 0,
-      offsetY: 0
+      offsetX: -50,
+      offsetY: 23
     },
     {
       name: 'fighter-stick-striking',
       fileName: 'fighter-c2.png',
-      offsetX: 0,
-      offsetY: 0
+      offsetX: -230,
+      offsetY: -15
     },
     {
       name: 'fighter-defeated',

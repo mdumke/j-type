@@ -34,7 +34,7 @@ const audio = {
 
   async loadSFX () {
     const basePath = 'assets/audio/'
-    const filenames = ['sword', 'knive', 'typing']
+    const filenames = ['sword', 'knive', 'stick', 'typing']
     const sounds = await Promise.all(
       filenames.map(
         name =>

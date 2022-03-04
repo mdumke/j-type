@@ -17,7 +17,7 @@ const levelManager = {
   getEnemy (level) {
     return new Player({
       health: 10 + 20 * level,
-      weapon: 'knive'
+      weapon: level === 0 ? 'knive' : 'stick'
     })
   },
 

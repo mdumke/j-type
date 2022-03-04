@@ -7,6 +7,10 @@ class Timer {
     this.interval
   }
 
+  static async block (duration) {
+    return new Promise(res => setTimeout(res, duration))
+  }
+
   start (duration = 1000, repeat = false) {
     this.duration = duration
     this.repeat = repeat

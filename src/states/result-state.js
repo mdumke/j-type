@@ -10,8 +10,8 @@ class ResultState extends State {
     ui.hideInput()
 
     hero.isDefeated()
-      ? ui.animateHeroDefeated(hero, enemy)
-      : ui.animateEnemyDefeated(enemy, hero)
+      ? ui.animateHeroDefeated(enemy)
+      : ui.animateEnemyDefeated(hero)
 
     setTimeout(() => {
       stateMachine.change('play', {
