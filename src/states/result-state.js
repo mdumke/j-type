@@ -22,9 +22,8 @@ class ResultState extends State {
       ? ui.animateHeroDefeated(enemy)
       : ui.animateEnemyDefeated(hero)
 
-    this.registerListeners()
-
     setTimeout(() => {
+      this.registerListeners()
       ui.showInstructions('Press SPACE')
     }, 1500)
   }

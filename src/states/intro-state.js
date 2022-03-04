@@ -23,12 +23,12 @@ class IntroState extends State {
     this.enemy = levelManager.getEnemy(level)
 
     ui.renderWaitState(this.hero, this.enemy)
-    display.showTarget(`LEVEL ${level + 1}`, '3rem')
-
-    this.registerListener()
+    // display.showTarget(`LEVEL ${level + 1}`, '3rem')
+    display.showTarget(levelManager.getLevelSummary(level), '1.5rem')
 
     setTimeout(() => {
       ui.showInstructions('Press SPACE')
+      this.registerListener()
     }, 1500)
   }
 

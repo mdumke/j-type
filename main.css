@@ -178,6 +178,20 @@ body {
     color: var(--gb-4);
 }
 
+.level-title {
+    margin-bottom: 20px;
+}
+
+.hiragana-table {
+    margin: 0 auto;
+    width: 100%;
+    text-align: left;
+}
+
+.hiragana-table td:nth-child(2) {
+    padding-right: 30px;
+}
+
 .error {
     color: var(--gb-3);
 }
