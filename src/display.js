@@ -3,6 +3,10 @@ const display = {
     document.querySelector('#loader').classList.add('loader')
   },
 
+  hideLoader () {
+    document.querySelector('#loader').classList.remove('loader')
+  },
+
   hide (elementId) {
     document.querySelector('#' + elementId).classList.add('hide')
   },

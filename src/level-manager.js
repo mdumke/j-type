@@ -10,15 +10,15 @@ const levelManager = {
 
   getHero (level) {
     return new Player({
-      health: 2 + level,
+      health: 2 + 2 * level,
       weapon: 'sword'
     })
   },
 
   getEnemy (level) {
     return new Player({
-      health: 2 + level,
-      weapon: level === 0 ? 'knive' : 'stick'
+      health: 2 + 2 * level,
+      weapon: ['knive', 'stick'][level]
     })
   },
 

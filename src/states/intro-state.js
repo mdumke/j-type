@@ -6,6 +6,7 @@ import { levelManager } from '../level-manager.js'
 class IntroState extends State {
   constructor () {
     super()
+    this.handleKeypress = this.handleKeypress.bind(this)
     this.stateMachine
     this.level
     this.hero
@@ -26,13 +27,11 @@ class IntroState extends State {
     // display.showTarget(`LEVEL ${level + 1}`, '3rem')
     display.showTarget(levelManager.getLevelSummary(level), '1.5rem')
 
-    setTimeout(() => {
-      ui.showInstructions('Press SPACE')
-      this.registerListener()
-    }, 1500)
+    ui.showInstructions('Press SPACE')
+    this.registerListener()
   }
 
-  async handleKeydown (e) {
+  async handleKeypress (e) {
     if (e.code !== 'Space') return
 
     ui.hideInstructions()
@@ -46,13 +45,19 @@ class IntroState extends State {
         enemy: this.enemy,
         stateMachine: this.stateMachine
       })
-    }, 1500)
+    }, 500)
+  }
+
+  exit () {
+    this.removeListener()
   }
 
   registerListener () {
-    window.addEventListener('keydown', this.handleKeydown.bind(this), {
-      once: true
-    })
+    window.addEventListener('keypress', this.handleKeypress)
+  }
+
+  removeListener () {
+    window.removeEventListener('keypress', this.handleKeypress)
   }
 }
 

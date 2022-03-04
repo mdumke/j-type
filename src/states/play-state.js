@@ -66,6 +66,7 @@ class PlayState extends State {
   }
 
   async handleSuccess () {
+    display.unmarkError()
     this.timer.stop()
     this.ignoreInput = true
     this.enemy.hit()

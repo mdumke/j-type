@@ -7,6 +7,7 @@ import { ui } from '../ui.js'
 
 class InitState extends State {
   async enter ({ stateMachine }) {
+    display.show('start-screen')
     display.showLoader()
     await audio.init()
     await images.init()
@@ -17,6 +18,7 @@ class InitState extends State {
 
   exit () {
     display.hide('start-screen')
+    display.hideLoader()
   }
 }
 

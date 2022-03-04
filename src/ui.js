@@ -74,6 +74,10 @@ const ui = {
     ui.renderEnemy(enemy, PLAYER_WAITING)
   },
 
+  clearArena () {
+    arena.clear()
+  },
+
   async animateHeroStrike (hero, enemy) {
     arena.clear()
     ui.renderHero(hero, PLAYER_STRIKING)
