@@ -25,15 +25,16 @@ class IntroState extends State {
     this.enemy = levelManager.getEnemy(level)
 
     ui.renderWaitState(this.hero, this.enemy)
-    // display.showTarget(`LEVEL ${level + 1}`, '3rem')
     display.showTarget(levelManager.getLevelSummary(level), '1.5rem')
 
-    ui.showInstructions('Press SPACE')
+    ui.blinkInstructions('Press SPACE')
     this.registerListener()
   }
 
   async handleKeypress (e) {
     if (e.code !== 'Space') return
+
+    this.removeListener()
 
     ui.hideInstructions()
     ui.showInput()
@@ -48,11 +49,7 @@ class IntroState extends State {
         enemy: this.enemy,
         stateMachine: this.stateMachine
       })
-    }, 500)
-  }
-
-  exit () {
-    this.removeListener()
+    }, 1000)
   }
 
   registerListener () {

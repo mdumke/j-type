@@ -17,12 +17,13 @@ class VictoryState extends State {
     audio.sounds.sfx.koto.play()
     ui.clearArena()
     ui.renderOnlyHero(hero, PLAYER_WAITING)
+    display.hide('powerbar-section')
     display.showTarget(
       `
-      <h1 class="victory-title">Victory!</h1>
+      <h1 class="victory-title">SUBARASHII!</h1>
       <br />
       <div class="victory-message">
-        You have made it through the first levels!
+        You have learned some Hiragana! Contratulations!!
         There is more to come. But now it's time to rest.
         <br />
         <br />
@@ -31,6 +32,10 @@ class VictoryState extends State {
     `,
       '1.5rem'
     )
+  }
+
+  exit () {
+    display.show('powerbar-section')
   }
 
   handleKeypress (e) {

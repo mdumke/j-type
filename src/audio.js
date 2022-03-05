@@ -39,6 +39,7 @@ const audio = {
       'knive',
       'stick',
       'rails',
+      'lose',
       'koto',
       'typing',
       'hajime',

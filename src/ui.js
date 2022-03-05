@@ -2,7 +2,7 @@ import { arena } from './arena.js'
 import { audio } from './audio.js'
 import { display } from './display.js'
 import { images } from './images.js'
-import { Timer } from './timer.js'
+import { wait } from './utils.js'
 import { PLAYER_WAITING, PLAYER_STRIKING } from './constants.js'
 
 const ui = {
@@ -29,9 +29,20 @@ const ui = {
     ui.inputEl.focus()
   },
 
+  showTarget (text, size = '13rem') {
+    display.showTarget(text, size)
+  },
+
   showInstructions (text) {
     display.show('instructions')
     ui.instructionsEl.innerHTML = text
+    ui.instructionsEl.classList.remove('blink')
+  },
+
+  blinkInstructions (text) {
+    display.show('instructions')
+    ui.instructionsEl.innerHTML = text
+    ui.instructionsEl.classList.add('blink')
   },
 
   hideInstructions () {
@@ -89,13 +100,14 @@ const ui = {
     arena.clear()
     ui.renderEnemy(enemy, PLAYER_STRIKING)
     ui.renderHeroPowerbar(hero.health / hero.maxHealth)
-    await Promise.all([audio.sounds.sfx[enemy.weapon].play(), Timer.block(400)])
+    await Promise.all([audio.sounds.sfx[enemy.weapon].play(), wait(400)])
   },
 
   async animateHeroDefeated (enemy) {
     arena.clear()
     ui.renderHeroDefeated()
     ui.renderEnemy(enemy, PLAYER_WAITING)
+    await audio.sounds.sfx.lose.play()
   },
 
   async animateEnemyDefeated (hero) {

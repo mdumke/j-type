@@ -1,140 +1,140 @@
 import { State } from './state.js'
-import { UniformRandom } from '../agents/uniform-random.js'
-import { levelManager } from '../level-manager.js'
 import { ui } from '../ui.js'
 import { display } from '../display.js'
 import { audio } from '../audio.js'
-import { Timer } from '../timer.js'
+import { levelManager } from '../level-manager.js'
+import { RecencyBased } from '../agents/index.js'
+import { statisticsManager as stats } from '../statistics-manager.js'
+
+const MATCH = 'match'
+const PARTIAL_MATCH = 'partial-match'
+const NO_MATCH = 'no-match'
 
 class PlayState extends State {
   constructor () {
     super()
-    this.timer = new Timer(this.handleTimeout.bind(this))
-    this.evaluateInput = this.evaluateInput.bind(this)
-    this.ignoreInput = false
-    this.stateMachine
-    this.hiragana
+    this.timeout
+    this.startTime
     this.agent
     this.target
+    this.level
+    this.hero
+    this.enemy
+    this.stateMachine
+    this.ignoreInput
   }
 
   enter ({ level, hero, enemy, stateMachine }) {
-    display.show('play-screen')
-    ui.showInput()
+    this.agent = new RecencyBased(levelManager.getHiragana(level))
     this.level = level
     this.hero = hero
     this.enemy = enemy
     this.stateMachine = stateMachine
-    this.hiragana = levelManager.getHiragana(level)
-    this.agent = new UniformRandom(this.hiragana)
-    this.selectTarget()
     this.registerListener()
+    this.newRound()
   }
 
-  selectTarget () {
+  exit () {
+    ui.clearInput()
+  }
+
+  newRound () {
     this.target = this.agent.choose()
+    ui.showTarget(this.target.hiragana)
+    this.startTime = performance.now()
+    this.wait()
+  }
+
+  wait () {
     this.ignoreInput = false
-    this.timer.start(2500, true)
-    display.showTarget(this.target.hiragana)
     display.unmarkError()
     ui.clearInput()
     ui.focusInput()
     ui.renderWaitState(this.hero, this.enemy)
+    this.setTimer()
   }
 
-  exit () {
-    display.hide('play-screen')
-    this.removeListener()
-    this.timer.stop()
-  }
-
-  async evaluateInput (e) {
-    audio.sounds.sfx['typing'].play()
-
-    if (this.ignoreInput) return
-
-    const guess = ui.getInput()
-    const goal = this.target.romaji
-
-    if (guess === goal) {
-      await this.handleSuccess()
-    } else if (guess !== goal.slice(0, guess.length)) {
-      await this.handleError()
-    } else {
-      this.handleContinue()
+  setTimer () {
+    this.timeout && clearTimeout(this.timeout)
+    const { mean, n, errors } = stats.get(this.target.romaji)
+    if (mean !== null) {
+      const dt = mean + 300 + 2000 / (n - errors + 1)
+      this.timeout = setTimeout(() => {
+        this.handleEnemyStrike()
+      }, dt)
     }
   }
 
-  async handleSuccess () {
-    display.unmarkError()
-    this.timer.stop()
+  evaluateInput () {
+    const guess = ui.getInput()
+    const goal = this.target.romaji
+
+    if (guess === goal) return MATCH
+
+    return guess.length < goal.length && guess === goal.slice(0, guess.length)
+      ? PARTIAL_MATCH
+      : NO_MATCH
+  }
+
+  leave () {
+    this.timeout && clearTimeout(this.timeout)
+    this.stateMachine.change('result', {
+      level: this.level,
+      hero: this.hero,
+      enemy: this.enemy,
+      stateMachine: this.stateMachine
+    })
+  }
+
+  async handleMatch () {
+    stats.observe(this.target.romaji, performance.now() - this.startTime)
     this.ignoreInput = true
     this.enemy.hit()
     await Promise.all([
       ui.animateHeroStrike(this.hero, this.enemy),
       audio.playVoiceRecording(this.target.romaji)
     ])
-    this.selectTarget()
-
-    if (this.enemy.isDefeated()) {
-      this.stateMachine.change('result', {
-        level: this.level,
-        hero: this.hero,
-        enemy: this.enemy,
-        stateMachine: this.stateMachine
-      })
-    }
+    this.enemy.isDefeated() ? this.leave() : this.newRound()
   }
 
-  async handleError () {
-    this.timer.restart()
+  handleError () {
+    stats.observe(this.target.romaji, performance.now(), true)
     display.markError()
+    this.handleEnemyStrike()
+  }
+
+  handleEnemyStrike = async () => {
     this.ignoreInput = true
     this.hero.hit()
     await ui.animateEnemyStrike(this.enemy, this.hero)
-    this.ignoreInput = false
-    ui.renderWaitState(this.hero, this.enemy)
-    ui.clearInput()
-
-    if (this.hero.isDefeated()) {
-      this.stateMachine.change('result', {
-        level: this.level,
-        hero: this.hero,
-        enemy: this.enemy,
-        stateMachine: this.stateMachine
-      })
-    }
+    this.hero.isDefeated() ? this.leave() : this.wait()
   }
 
-  handleContinue () {
-    this.timer.restart()
-    display.unmarkError()
-    ui.renderWaitState(this.hero, this.enemy)
+  handlePartialMatch () {
+    this.setTimer()
   }
 
-  async handleTimeout () {
-    this.ignoreInput = true
-    this.hero.hit()
-    await ui.animateEnemyStrike(this.enemy, this.hero)
-    this.ignoreInput = false
-    ui.renderWaitState(this.hero, this.enemy)
+  handleInput = () => {
+    audio.sounds.sfx.typing.play()
 
-    if (this.hero.isDefeated()) {
-      this.stateMachine.change('result', {
-        level: this.level,
-        hero: this.hero,
-        enemy: this.enemy,
-        stateMachine: this.stateMachine
-      })
+    if (this.ignoreInput || !ui.getInput()) return
+
+    switch (this.evaluateInput()) {
+      case MATCH:
+        return this.handleMatch()
+      case PARTIAL_MATCH:
+        return this.handlePartialMatch()
+      case NO_MATCH:
+        return this.handleError()
     }
   }
 
   registerListener () {
-    ui.inputEl.addEventListener('input', this.evaluateInput)
+    ui.inputEl.addEventListener('input', this.handleInput)
   }
 
   removeListener () {
-    ui.inputEl.removeEventListener('input', this.evaluateInput)
+    ui.inputEl.removeEventListener('input', this.handleInput)
   }
 }
 

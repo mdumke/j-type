@@ -13,7 +13,7 @@
 
 body {
     font-family: monospace;
-    background-color: var(--gb-1);
+    background-color: #dfdcd7;
 }
 
 .container {
@@ -26,6 +26,7 @@ body {
     width: 500px;
     height: 700px;
     background-color: var(--gb-2);
+    box-shadow: 2px 2px 5px -1px #333a;
 }
 
 .start-screen {
@@ -90,6 +91,16 @@ body {
     }
 }
 
+.blink {
+    animation: blinking 3s steps(10, start) infinite;
+}
+
+@keyframes blinking {
+    to {
+        visibility: hidden;
+    }
+}
+
 .play-screen {
     margin: auto;
     cursor: none;
@@ -110,7 +121,7 @@ body {
 
 .powerbar-section {
     position: absolute;
-    top: 2px;
+    top: 5px;
     left: 2px;
     display: flex;
     justify-content: space-between;

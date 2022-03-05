@@ -1,7 +1,6 @@
 class UniformRandom {
   constructor (hiragana) {
     this.hiragana = hiragana
-    this.current
   }
 
   choose () {

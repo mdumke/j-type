@@ -1,6 +1,8 @@
 import { State } from './state.js'
 import { display } from '../display.js'
 import { ui } from '../ui.js'
+import { statisticsManager } from '../statistics-manager.js'
+import { levelManager } from '../level-manager.js'
 
 class ResultState extends State {
   constructor () {
@@ -29,6 +31,7 @@ class ResultState extends State {
 
     this.registerListeners()
     ui.showInstructions('Press SPACE')
+    console.log(statisticsManager.stats)
   }
 
   exit () {
@@ -41,7 +44,7 @@ class ResultState extends State {
     this.removeListeners()
 
     setTimeout(() => {
-      if (this.nextLevel < 3) {
+      if (this.nextLevel < levelManager.getNumLevels()) {
         this.stateMachine.change('intro', {
           level: this.nextLevel,
           stateMachine: this.stateMachine
