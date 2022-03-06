@@ -87,6 +87,7 @@ class PlayState extends State {
   }
 
   async handleMatch () {
+    clearTimeout(this.timeout)
     stats.observe(this.target.romaji, performance.now() - this.startTime)
     this.ignoreInput = true
     this.enemy.hit()
