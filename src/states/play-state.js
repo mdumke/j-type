@@ -132,10 +132,12 @@ class PlayState extends State {
 
   registerListener () {
     ui.inputEl.addEventListener('input', this.handleInput)
+    ui.inputEl.addEventListener('blur', ui.focusInput)
   }
 
   removeListener () {
     ui.inputEl.removeEventListener('input', this.handleInput)
+    ui.inputEl.removeEventListener('blur', ui.focusInput)
   }
 }
 
