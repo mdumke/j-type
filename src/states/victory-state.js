@@ -2,17 +2,16 @@ import { State } from './state.js'
 import { display } from '../display.js'
 import { ui } from '../ui.js'
 import { audio } from '../audio.js'
+import { stateMachine } from './state-machine.js'
 import { PLAYER_WAITING } from '../constants.js'
 
 class VictoryState extends State {
   constructor () {
     super()
     this.handleKeypress = this.handleKeypress.bind(this)
-    this.stateMachine
   }
 
-  enter ({ hero, stateMachine }) {
-    this.stateMachine = stateMachine
+  enter ({ hero }) {
     this.registerListeners()
     audio.sounds.sfx.koto.play()
     ui.clearArena()
@@ -44,9 +43,8 @@ class VictoryState extends State {
     this.removeListeners()
 
     setTimeout(() => {
-      this.stateMachine.change('intro', {
-        level: 0,
-        stateMachine: this.stateMachine
+      stateMachine.change('intro', {
+        level: 0
       })
     }, 100)
   }

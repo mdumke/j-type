@@ -5,9 +5,10 @@ import { images } from '../images.js'
 import { arena } from '../arena.js'
 import { ui } from '../ui.js'
 import { statisticsManager } from '../statistics-manager.js'
+import { stateMachine } from './state-machine.js'
 
 class InitState extends State {
-  async enter ({ stateMachine }) {
+  async enter () {
     display.show('start-screen')
     display.showLoader()
     await audio.init()
@@ -15,7 +16,7 @@ class InitState extends State {
     await arena.init()
     await ui.init()
     await statisticsManager.init()
-    stateMachine.change('intro', { stateMachine, level: 0 })
+    stateMachine.change('intro', { level: 0 })
   }
 
   exit () {

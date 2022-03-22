@@ -3,20 +3,19 @@ import { display } from '../display.js'
 import { ui } from '../ui.js'
 import { levelManager } from '../level-manager.js'
 import { audio } from '../audio.js'
+import { stateMachine } from './state-machine.js'
 
 class IntroState extends State {
   constructor () {
     super()
     this.handleKeypress = this.handleKeypress.bind(this)
-    this.stateMachine
     this.level
     this.hero
     this.enemy
   }
 
-  enter ({ level, stateMachine }) {
+  enter ({ level }) {
     this.level = level
-    this.stateMachine = stateMachine
 
     display.show('play-screen')
     ui.hideInput()
@@ -43,11 +42,10 @@ class IntroState extends State {
     audio.sounds.sfx.hajime.play()
 
     setTimeout(() => {
-      this.stateMachine.change('play', {
+      stateMachine.change('play', {
         level: this.level,
         hero: this.hero,
-        enemy: this.enemy,
-        stateMachine: this.stateMachine
+        enemy: this.enemy
       })
     }, 1000)
   }

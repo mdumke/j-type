@@ -5,6 +5,7 @@ import { audio } from '../audio.js'
 import { levelManager } from '../level-manager.js'
 import { RecencyBased } from '../agents/index.js'
 import { statisticsManager as stats } from '../statistics-manager.js'
+import { stateMachine } from './state-machine.js'
 
 const MATCH = 'match'
 const PARTIAL_MATCH = 'partial-match'
@@ -20,16 +21,14 @@ class PlayState extends State {
     this.level
     this.hero
     this.enemy
-    this.stateMachine
     this.ignoreInput
   }
 
-  enter ({ level, hero, enemy, stateMachine }) {
+  enter ({ level, hero, enemy }) {
     this.agent = new RecencyBased(levelManager.getHiragana(level))
     this.level = level
     this.hero = hero
     this.enemy = enemy
-    this.stateMachine = stateMachine
     this.registerListener()
     this.newRound()
   }
@@ -78,11 +77,10 @@ class PlayState extends State {
 
   leave () {
     this.timeout && clearTimeout(this.timeout)
-    this.stateMachine.change('result', {
+    stateMachine.change('result', {
       level: this.level,
       hero: this.hero,
-      enemy: this.enemy,
-      stateMachine: this.stateMachine
+      enemy: this.enemy
     })
   }
 

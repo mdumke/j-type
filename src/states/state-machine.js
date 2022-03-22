@@ -26,4 +26,6 @@ class StateMachine {
   }
 }
 
-export { StateMachine }
+const stateMachine = new StateMachine()
+
+export { stateMachine }

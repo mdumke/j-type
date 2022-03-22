@@ -3,18 +3,17 @@ import { display } from '../display.js'
 import { ui } from '../ui.js'
 import { statisticsManager } from '../statistics-manager.js'
 import { levelManager } from '../level-manager.js'
+import { stateMachine } from './state-machine.js'
 
 class ResultState extends State {
   constructor () {
     super()
     this.handleKeypress = this.handleKeypress.bind(this)
-    this.stateMachine
     this.nextLevel
     this.hero
   }
 
-  enter ({ hero, enemy, level, stateMachine }) {
-    this.stateMachine = stateMachine
+  enter ({ hero, enemy, level }) {
     this.nextLevel = level + enemy.isDefeated()
     this.hero = hero
     display.show('play-screen')
@@ -45,13 +44,11 @@ class ResultState extends State {
 
     setTimeout(() => {
       if (this.nextLevel < levelManager.getNumLevels()) {
-        this.stateMachine.change('intro', {
-          level: this.nextLevel,
-          stateMachine: this.stateMachine
+        stateMachine.change('intro', {
+          level: this.nextLevel
         })
       } else {
-        this.stateMachine.change('victory', {
-          stateMachine: this.stateMachine,
+        stateMachine.change('victory', {
           hero: this.hero
         })
       }
