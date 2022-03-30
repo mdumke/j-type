@@ -10,7 +10,7 @@ const arena = {
     if (flip) {
       arena.ctx.save()
       arena.ctx.translate(x + img.offsetX + img.width, y + img.offsetY)
-      arena.ctx.scale(-1, 1)
+      arena.ctx.scale(-(img.scale || 1), img.scale || 1)
       arena.ctx.drawImage(img, 0, 0)
       arena.ctx.restore()
     } else {
@@ -18,8 +18,8 @@ const arena = {
         img,
         x + img.offsetX,
         y + img.offsetY,
-        img.width,
-        img.height
+        img.width * (img.scale || 1),
+        img.height * (img.scale || 1)
       )
     }
   },

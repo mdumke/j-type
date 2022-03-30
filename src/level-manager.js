@@ -5,12 +5,12 @@ import { pairwise } from './utils.js'
 const levelManager = {
   chars: [
     ['あ', 'え', 'い', 'お', 'う'],
-    ['さ', 'し', 'す', 'せ', 'そ'],
-    ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'],
-    ['か', 'き', 'く', 'け', 'こ'],
-    ['が', 'ぎ', 'ぐ', 'げ', 'ご'],
-    ['た', 'ち', 'つ', 'て', 'と'],
-    ['だ', 'ぢ', 'づ', 'で', 'ど']
+    ['さ', 'し', 'す', 'せ', 'そ']
+    // ['ざ', 'じ', 'ず', 'ぜ', 'ぞ'],
+    // ['か', 'き', 'く', 'け', 'こ'],
+    // ['が', 'ぎ', 'ぐ', 'げ', 'ご'],
+    // ['た', 'ち', 'つ', 'て', 'と'],
+    // ['だ', 'ぢ', 'づ', 'で', 'ど']
   ],
 
   getNumLevels () {
@@ -19,15 +19,13 @@ const levelManager = {
 
   getHero (level) {
     return new Player({
-      health: 10,
-      weapon: 'sword'
+      health: 5
     })
   },
 
   getEnemy (level) {
     return new Player({
-      health: 20 + 10 * level,
-      weapon: ['knive', 'stick', 'rails'][level % 3]
+      health: 5
     })
   },
 

@@ -3,58 +3,32 @@ const images = {
 
   list: [
     {
-      name: 'fighter-sword-waiting',
-      fileName: 'fighter-sword-1.png',
+      name: 'frog-waiting',
+      fileName: 'frog-waiting.png',
       offsetX: 0,
-      offsetY: 0
+      offsetY: 0,
+      scale: 0.6
     },
     {
-      name: 'fighter-sword-striking',
-      fileName: 'fighter-sword-2.png',
+      name: 'frog-striking',
+      fileName: 'frog-striking.png',
       offsetX: 0,
-      offsetY: 0
+      offsetY: 0,
+      scale: 0.6
     },
     {
-      name: 'fighter-knive-waiting',
-      fileName: 'fighter-knive-1.png',
+      name: 'frog-hit',
+      fileName: 'frog-hit.png',
       offsetX: 0,
-      offsetY: 25
+      offsetY: 0,
+      scale: 0.6
     },
     {
-      name: 'fighter-knive-striking',
-      fileName: 'fighter-knive-2.png',
-      offsetX: -250,
-      offsetY: -15
-    },
-    {
-      name: 'fighter-stick-waiting',
-      fileName: 'fighter-stick-1.png',
-      offsetX: -50,
-      offsetY: 23
-    },
-    {
-      name: 'fighter-stick-striking',
-      fileName: 'fighter-stick-2.png',
-      offsetX: -230,
-      offsetY: -15
-    },
-    {
-      name: 'fighter-rails-waiting',
-      fileName: 'fighter-rails-1.png',
+      name: 'frog-defeated',
+      fileName: 'frog-defeated.png',
       offsetX: 0,
-      offsetY: 24
-    },
-    {
-      name: 'fighter-rails-striking',
-      fileName: 'fighter-rails-2.png',
-      offsetX: -210,
-      offsetY: 2
-    },
-    {
-      name: 'fighter-defeated',
-      fileName: 'fighter-defeated.png',
-      offsetX: 0,
-      offsetY: 0
+      offsetY: 0,
+      scale: 0.6
     }
   ],
 
@@ -69,6 +43,7 @@ const images = {
             images[img.name].fileName = img.fileName
             images[img.name].offsetX = img.offsetX
             images[img.name].offsetY = img.offsetY
+            images[img.name].scale = img.scale
             images[img.name].src = `${images.basePath}/${img.fileName}`
           })
       )

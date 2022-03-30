@@ -2,8 +2,6 @@ import { arena } from './arena.js'
 import { audio } from './audio.js'
 import { display } from './display.js'
 import { images } from './images.js'
-import { wait } from './utils.js'
-import { PLAYER_WAITING, PLAYER_STRIKING } from './constants.js'
 
 const ui = {
   inputEl: null,
@@ -57,32 +55,58 @@ const ui = {
     display.setWidth(display.getEnemyPowerbar(), fraction * 100)
   },
 
-  renderHeroDefeated () {
-    arena.drawImage(images['fighter-defeated'], 40, 160)
-  },
-
-  renderEnemyDefeated () {
-    arena.drawImage(images['fighter-defeated'], 280, 160, true)
-  },
-
   renderOnlyHero (player, state) {
     arena.drawImage(images[`fighter-${player.weapon}-${state}`], 50, 75)
   },
 
   renderHero (player, state) {
-    arena.drawImage(images[`fighter-${player.weapon}-${state}`], 50, 75)
+    arena.drawImage(images[`frog-${state}`], 70, 60)
     ui.renderHeroPowerbar(player.health / player.maxHealth)
   },
 
+  renderHeroWaiting () {
+    arena.drawImage(images[`frog-waiting`], 100, 60)
+  },
+
+  renderHeroStriking () {
+    arena.drawImage(images[`frog-striking`], 200, 60)
+  },
+
+  renderHeroHit () {
+    arena.drawImage(images[`frog-hit`], 50, 60)
+  },
+
+  renderHeroDefeated () {
+    arena.drawImage(images['frog-defeated'], 40, 160)
+  },
+
+  renderEnemyWaiting () {
+    arena.drawImage(images[`frog-waiting`], 210, 60, true)
+  },
+
+  renderEnemyStriking () {
+    arena.drawImage(images[`frog-striking`], 90, 60, true)
+  },
+
+  renderEnemyHit () {
+    arena.drawImage(images[`frog-hit`], 170, 60, true)
+  },
+
+  renderEnemyDefeated () {
+    arena.drawImage(images['frog-defeated'], 170, 160, true)
+  },
+
   renderEnemy (player, state) {
-    arena.drawImage(images[`fighter-${player.weapon}-${state}`], 300, 75, true)
+    arena.drawImage(images[`frog-${state}`], 230, 70, true)
     ui.renderEnemyPowerbar(player.health / player.maxHealth)
   },
 
   renderWaitState (hero, enemy) {
     arena.clear()
-    ui.renderHero(hero, PLAYER_WAITING)
-    ui.renderEnemy(enemy, PLAYER_WAITING)
+    ui.renderHeroWaiting()
+    ui.renderEnemyWaiting()
+    ui.renderHeroPowerbar(hero.health / hero.maxHealth)
+    ui.renderEnemyPowerbar(enemy.health / enemy.maxHealth)
   },
 
   clearArena () {
@@ -91,28 +115,32 @@ const ui = {
 
   async animateHeroStrike (hero, enemy) {
     arena.clear()
-    ui.renderHero(hero, PLAYER_STRIKING)
+    ui.renderEnemyHit()
+    ui.renderHeroStriking()
+    ui.renderHeroPowerbar(hero.health / hero.maxHealth)
     ui.renderEnemyPowerbar(enemy.health / enemy.maxHealth)
-    await audio.sounds.sfx[hero.weapon].play()
+    await audio.sounds.sfx['sword'].play()
   },
 
   async animateEnemyStrike (enemy, hero) {
     arena.clear()
-    ui.renderEnemy(enemy, PLAYER_STRIKING)
+    ui.renderHeroHit()
+    ui.renderEnemyStriking()
     ui.renderHeroPowerbar(hero.health / hero.maxHealth)
-    await Promise.all([audio.sounds.sfx[enemy.weapon].play(), wait(400)])
+    ui.renderEnemyPowerbar(enemy.health / enemy.maxHealth)
+    await audio.sounds.sfx['sword'].play()
   },
 
-  async animateHeroDefeated (enemy) {
+  async animateHeroDefeated () {
     arena.clear()
     ui.renderHeroDefeated()
-    ui.renderEnemy(enemy, PLAYER_WAITING)
+    ui.renderEnemyWaiting()
     await audio.sounds.sfx.lose.play()
   },
 
-  async animateEnemyDefeated (hero) {
+  async animateEnemyDefeated () {
     arena.clear()
-    ui.renderHero(hero, PLAYER_WAITING)
+    ui.renderHeroWaiting()
     ui.renderEnemyDefeated()
     await audio.sounds.sfx.shamisen.play()
   },

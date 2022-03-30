@@ -9,5 +9,3 @@ export const pairwise = arr => {
 }
 
 export const sample = arr => arr[Math.floor(Math.random() * arr.length)]
-
-export const wait = async dt => new Promise(res => setTimeout(res, dt))

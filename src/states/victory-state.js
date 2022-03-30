@@ -3,7 +3,6 @@ import { display } from '../display.js'
 import { ui } from '../ui.js'
 import { audio } from '../audio.js'
 import { stateMachine } from './state-machine.js'
-import { PLAYER_WAITING } from '../constants.js'
 
 class VictoryState extends State {
   constructor () {
@@ -15,7 +14,7 @@ class VictoryState extends State {
     this.registerListeners()
     audio.sounds.sfx.koto.play()
     ui.clearArena()
-    ui.renderOnlyHero(hero, PLAYER_WAITING)
+    ui.renderHeroWaiting()
     display.hide('powerbar-section')
     display.showTarget(
       `
