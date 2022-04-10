@@ -1,15 +1,17 @@
 {
-  "name": "hiragana-typing",
-  "version": "1.0.0",
+  "name": "j-type",
+  "version": "0.1.0",
   "description": "",
-  "main": "index.js",
+  "private": true,
   "scripts": {
-    "start": "http-server -c-1 -o"
+    "start": "parcel src/index.html",
+    "check": "tsc --noEmit"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "devDependencies": {
-    "http-server": "^14.1.0"
+    "parcel": "^2.4.1",
+    "typescript": "4.4"
   }
 }

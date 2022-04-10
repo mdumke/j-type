@@ -1,0 +1,17 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.container {
+    height: 100vh;
+    display: flex;
+}
+
+.game {
+    margin: auto;
+    height: 800px;
+    width: 800px;
+    border: 1px solid #aaa;
+}
