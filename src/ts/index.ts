@@ -5,8 +5,8 @@ const main = (): void => {
   const game = new Game()
 
   game.start({
-    width: 800,
-    height: 800,
+    width: 650,
+    height: 650,
     el: root as HTMLElement
   })
 }

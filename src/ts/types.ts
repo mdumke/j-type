@@ -1,6 +1,13 @@
-import { LoadState } from './states/load-state'
+import { StateMachine } from './states/state-machine'
+import { LoadState } from './states/loading-state'
+import { BackstoryState } from './states/backstory-state'
 
-export type State = LoadState
+export type State = LoadState | BackstoryState
+
+export interface Image {
+  name: string
+  el: HTMLImageElement
+}
 
 export interface RenderTarget {
   width: number
@@ -8,8 +15,17 @@ export interface RenderTarget {
   el: HTMLElement
 }
 
-export interface LoadStateData {
+export interface LoadingStateData {
   renderTarget: RenderTarget
+  stateMachine: StateMachine
 }
 
-export type StateData = LoadStateData
+export interface BackstoryStateData {
+  renderTarget: RenderTarget
+  stateMachine: StateMachine
+  assets: {
+    images: Image[]
+  }
+}
+
+export type StateData = LoadingStateData | BackstoryStateData

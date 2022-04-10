@@ -2,7 +2,7 @@ import { State, StateData } from '../types'
 
 class StateMachine {
   currentState: State | null = null
-  states: { [key: string]: State } = {}
+  states = {}
 
   register (key: string, state: State): void {
     if (key in this.states) {
@@ -22,7 +22,7 @@ class StateMachine {
     }
 
     this.currentState = this.states[key]!
-    this.currentState.enter(data)
+    this.currentState!.enter(data)
   }
 }
 
