@@ -1,0 +1,3 @@
+class SoundBuffer {}
+
+export { SoundBuffer }

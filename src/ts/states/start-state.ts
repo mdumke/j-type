@@ -1,20 +1,20 @@
-import { BackstoryStateData } from '../types'
+import { StartStateData } from '../types'
 import { renderScreen, blinkInstructions } from '../display'
-import { BACKSTORY } from '../constants'
+import { START, LOADING } from '../constants'
 
-class BackstoryState {
-  state: BackstoryStateData
+class StartState {
+  state: StartStateData
 
-  async enter (state: BackstoryStateData): Promise<void> {
-    console.log(state)
-    renderScreen(BACKSTORY, state.renderTarget)
+  enter (state: StartStateData): void {
+    this.state = state
+    renderScreen(START, state.renderTarget)
     blinkInstructions('Press Space')
     this.registerListeners()
   }
 
   handleKeypress = (e: KeyboardEvent): void => {
     if (e.code === 'Space') {
-      console.log('switching to home screen')
+      this.state.stateMachine.change(LOADING, this.state)
     }
   }
 
@@ -31,4 +31,4 @@ class BackstoryState {
   }
 }
 
-export { BackstoryState }
+export { StartState }

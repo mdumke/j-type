@@ -1,35 +1,46 @@
-import { Image, LoadingStateData } from '../types'
+import { ImageLookup, SoundLookup, LoadingStateData } from '../types'
 import { renderScreen, blinkInstructions } from '../display'
 import { BACKSTORY, LOADING } from '../constants'
 import { loadImages } from '../images'
+import { loadSounds } from '../audio'
 import { wait } from '../utils'
 
-class LoadState {
+class LoadingState {
   state: LoadingStateData
-  images: Image[]
+  images: ImageLookup
+  sounds: SoundLookup
+  audioContext: AudioContext
 
   async enter (state: LoadingStateData): Promise<void> {
     this.state = state
+    this.audioContext = new AudioContext()
     renderScreen(LOADING, state.renderTarget)
-    this.images = await this.loadImages(2000)
+    const [images, sounds] = await this.loadAssets(2000)
+    this.images = images
+    this.sounds = sounds
     blinkInstructions('Press Space')
     this.registerListeners()
   }
 
-  async loadImages (minWaitDuration: number): Promise<Image[]> {
-    const [images, _] = await Promise.all([
+  async loadAssets (minDuration: number): Promise<[ImageLookup, SoundLookup]> {
+    const [images, sounds, _] = await Promise.all([
       await loadImages(),
-      wait(minWaitDuration)
+      await loadSounds(this.audioContext),
+      wait(minDuration)
     ])
-    return images
+    return [images, sounds]
   }
 
   handleKeypress = (e: KeyboardEvent): void => {
     if (e.code === 'Space') {
       this.state.stateMachine.change(BACKSTORY, {
         ...this.state,
-        assets: {
+        graphics: {
           images: this.images
+        },
+        audio: {
+          ctx: this.audioContext,
+          sounds: this.sounds
         }
       })
     }
@@ -48,4 +59,4 @@ class LoadState {
   }
 }
 
-export { LoadState }
+export { LoadingState }

@@ -1,18 +1,35 @@
 import { StateMachine } from './states/state-machine'
-import { LoadState } from './states/loading-state'
+import { StartState } from './states/start-state'
+import { LoadingState } from './states/loading-state'
 import { BackstoryState } from './states/backstory-state'
-
-export type State = LoadState | BackstoryState
 
 export interface Image {
   name: string
   el: HTMLImageElement
 }
 
+export interface ImageLookup {
+  [key: string]: Image
+}
+
+export interface Sound {
+  name: string
+  buffer: AudioBuffer
+}
+
+export interface SoundLookup {
+  [key: string]: Sound
+}
+
 export interface RenderTarget {
   width: number
   height: number
   el: HTMLElement
+}
+
+export interface StartStateData {
+  renderTarget: RenderTarget
+  stateMachine: StateMachine
 }
 
 export interface LoadingStateData {
@@ -23,9 +40,15 @@ export interface LoadingStateData {
 export interface BackstoryStateData {
   renderTarget: RenderTarget
   stateMachine: StateMachine
-  assets: {
-    images: Image[]
+  audio: {
+    ctx: AudioContext
+    sounds: SoundLookup
+  }
+  graphics: {
+    images: ImageLookup
   }
 }
 
-export type StateData = LoadingStateData | BackstoryStateData
+export type State = StartState | LoadingState | BackstoryState
+
+export type StateData = StartStateData | LoadingStateData | BackstoryStateData

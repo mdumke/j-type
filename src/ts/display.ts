@@ -1,5 +1,6 @@
 import { RenderTarget } from './types'
-import { LOADING, BACKSTORY } from './constants'
+import { START, LOADING, BACKSTORY } from './constants'
+import { html as startScreenHTML } from './screens/start-screen'
 import { html as loadingScreenHTML } from './screens/loading-screen'
 import { html as backstoryScreenHTML } from './screens/backstory-screen'
 
@@ -8,6 +9,9 @@ export const renderScreen = (screen: string, target: RenderTarget): void => {
   target.el.style.height = `${target.height}px`
 
   switch (screen) {
+    case START:
+      target.el.innerHTML = startScreenHTML
+      break
     case LOADING:
       target.el.innerHTML = loadingScreenHTML
       break

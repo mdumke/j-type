@@ -1,7 +1,8 @@
-import { Image } from './types'
-import frogPortrait from '../assets/images/frog-portrait.png'
+import { Image, ImageLookup } from './types'
 
-const images = [{ path: frogPortrait, name: 'frog-portrait' }]
+const BASE_PATH = 'images'
+
+const images = [{ filename: 'frog-portrait.png', name: 'frogPortrait' }]
 
 const loadImage = async (item): Promise<Image> => {
   return new Promise((resolve, reject) => {
@@ -13,9 +14,14 @@ const loadImage = async (item): Promise<Image> => {
       })
     }
     img.onerror = reject
-    img.src = item.path
+    img.src = `${BASE_PATH}/${item.filename}`
   })
 }
 
-export const loadImages = async (): Promise<Image[]> =>
-  Promise.all(images.map(loadImage))
+export const loadImages = async (): Promise<ImageLookup> => {
+  const items = await Promise.all(images.map(loadImage))
+  return items.reduce((memo, item) => {
+    memo[item.name] = item
+    return memo
+  }, {})
+}
