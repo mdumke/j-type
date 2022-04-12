@@ -5,7 +5,7 @@ import { BackstoryState } from './states/backstory-state'
 
 export interface Image {
   name: string
-  el: HTMLImageElement
+  img: HTMLImageElement
 }
 
 export interface ImageLookup {
@@ -27,6 +27,21 @@ export interface RenderTarget {
   el: HTMLElement
 }
 
+export interface AudioAssets {
+  ctx: AudioContext
+  sounds: SoundLookup
+}
+
+export interface ImageAssets {
+  sprites: ImageLookup
+  backgrounds: ImageLookup
+}
+
+export interface Assets {
+  audio: AudioAssets
+  images: ImageAssets
+}
+
 export interface StartStateData {
   renderTarget: RenderTarget
   stateMachine: StateMachine
@@ -40,13 +55,7 @@ export interface LoadingStateData {
 export interface BackstoryStateData {
   renderTarget: RenderTarget
   stateMachine: StateMachine
-  audio: {
-    ctx: AudioContext
-    sounds: SoundLookup
-  }
-  graphics: {
-    images: ImageLookup
-  }
+  assets: Assets
 }
 
 export type State = StartState | LoadingState | BackstoryState
