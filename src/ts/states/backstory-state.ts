@@ -1,9 +1,11 @@
 import { BackstoryStateData } from '../types'
 import { renderScreen, blinkInstructions, addBackgroundImage } from '../display'
+import { AudioPlayer } from '../audio-player'
 import { BACKSTORY } from '../constants'
 
 class BackstoryState {
   state: BackstoryStateData
+  player: AudioPlayer
 
   async enter (state: BackstoryStateData): Promise<void> {
     renderScreen(BACKSTORY, state.renderTarget)
@@ -11,9 +13,12 @@ class BackstoryState {
       state.renderTarget,
       state.assets.images.backgrounds['backstory']!
     )
-    blinkInstructions('Press Space')
+
+    this.player = new AudioPlayer(state.assets.audio, 'typing')
+    this.player.start()
     this.registerListeners()
-    console.log(state)
+
+    blinkInstructions('Press Space')
   }
 
   handleKeypress = (e: KeyboardEvent): void => {
@@ -31,6 +36,7 @@ class BackstoryState {
   }
 
   exit (): void {
+    this.player.stop()
     this.removeListeners()
   }
 }

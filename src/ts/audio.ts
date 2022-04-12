@@ -4,7 +4,8 @@ const SFX_PATH = 'audio/sfx'
 
 const sfx = [
   { filename: 'typing.mp3', name: 'typing' },
-  { filename: 'stick.mp3', name: 'stick' }
+  { filename: 'stick.mp3', name: 'stick' },
+  { filename: 'koto.mp3', name: 'koto' }
 ]
 
 const loadSound = async (sound, ctx: AudioContext): Promise<Sound> => {
