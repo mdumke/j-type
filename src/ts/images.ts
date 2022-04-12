@@ -8,7 +8,6 @@ const sprites = [
 ]
 
 const backgrounds = [
-  { path: 'backgrounds/title-bg.png', name: 'title' },
   { path: 'backgrounds/backstory-bg.png', name: 'backstory' },
   { path: 'backgrounds/home-bg.png', name: 'home' },
   { path: 'backgrounds/level-1-intro-bg.png', name: 'level-1-intro' }
@@ -28,16 +27,19 @@ const loadImage = async (item): Promise<Image> => {
   })
 }
 
-const loadImages = async (list): Promise<ImageLookup> => {
-  const items = await Promise.all(list.map(loadImage))
+export const loadSprites = async (): Promise<ImageLookup> => {
+  const items = await Promise.all(sprites.map(loadImage))
   return items.reduce((memo, item) => {
     memo[item.name] = item
     return memo
   }, {})
 }
 
-export const loadSprites = async (): Promise<ImageLookup> =>
-  await loadImages(sprites)
-
-export const loadBackgrounds = async (): Promise<ImageLookup> =>
-  await loadImages(backgrounds)
+export const loadBackgrounds = async (): Promise<ImageLookup> => {
+  const items = await Promise.all(backgrounds.map(loadImage))
+  return items.reduce((memo, item) => {
+    item.img.classList.add('background-image')
+    memo[item.name] = item
+    return memo
+  }, {})
+}

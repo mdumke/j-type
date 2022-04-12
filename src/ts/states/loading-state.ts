@@ -1,14 +1,15 @@
 import { Assets, LoadingStateData } from '../types'
-import { renderScreen } from '../display'
-import { BACKSTORY, LOADING } from '../constants'
+import { hide, show } from '../display'
+import { BACKSTORY } from '../constants'
 import { loadSprites, loadBackgrounds } from '../images'
 import { loadSounds } from '../audio'
 import { wait } from '../utils'
 
 class LoadingState {
   async enter (state: LoadingStateData): Promise<void> {
-    renderScreen(LOADING, state.renderTarget)
-    const assets = await this.loadAssets(100)
+    hide('instructions')
+    show('loader')
+    const assets = await this.loadAssets(500)
 
     state.stateMachine.change(BACKSTORY, {
       ...state,

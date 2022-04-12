@@ -1,7 +1,9 @@
 export const html = `
 
-<div class="screen">
-  <h1>Start Screen</h1>
+<div class="screen start-screen">
+  <img class="background-image" src="images/backgrounds/title-bg.png" alt="title">
+
+  <div id="loader" class="loader hide">Loading...</div>
   <div id="instructions" class="instructions"></div>
 </div>
 

@@ -10,14 +10,14 @@
 }
 
 .game {
+    position: relative;
     margin: auto;
-    border: 1px solid #aaa;
+    box-shadow: 0 0 5px 1px #ccca;
 }
 
 .screen {
     position: relative;
     height: 100%;
-    padding: 50px;
     text-align: center;
 }
 
@@ -26,12 +26,25 @@
     font-weight: 300;
 }
 
+.loader,
 .instructions {
     position: absolute;
     width: 100%;
     margin: 0 auto;
     bottom: 50px;
     left: 0;
+}
+
+.background-image {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: -1;
+}
+
+.hide {
+    display: none;
 }
 
 .blink {

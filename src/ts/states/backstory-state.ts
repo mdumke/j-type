@@ -1,15 +1,19 @@
 import { BackstoryStateData } from '../types'
-import { renderScreen, blinkInstructions } from '../display'
+import { renderScreen, blinkInstructions, addBackgroundImage } from '../display'
 import { BACKSTORY } from '../constants'
 
 class BackstoryState {
   state: BackstoryStateData
 
   async enter (state: BackstoryStateData): Promise<void> {
-    console.log(state)
     renderScreen(BACKSTORY, state.renderTarget)
+    addBackgroundImage(
+      state.renderTarget,
+      state.assets.images.backgrounds['backstory']!
+    )
     blinkInstructions('Press Space')
     this.registerListeners()
+    console.log(state)
   }
 
   handleKeypress = (e: KeyboardEvent): void => {

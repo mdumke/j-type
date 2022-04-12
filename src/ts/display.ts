@@ -1,7 +1,6 @@
-import { RenderTarget } from './types'
-import { START, LOADING, BACKSTORY } from './constants'
+import { RenderTarget, Image } from './types'
+import { START, BACKSTORY } from './constants'
 import { html as startScreenHTML } from './screens/start-screen'
-import { html as loadingScreenHTML } from './screens/loading-screen'
 import { html as backstoryScreenHTML } from './screens/backstory-screen'
 
 export const renderScreen = (screen: string, target: RenderTarget): void => {
@@ -12,9 +11,6 @@ export const renderScreen = (screen: string, target: RenderTarget): void => {
     case START:
       target.el.innerHTML = startScreenHTML
       break
-    case LOADING:
-      target.el.innerHTML = loadingScreenHTML
-      break
     case BACKSTORY:
       target.el.innerHTML = backstoryScreenHTML
       break
@@ -23,13 +19,35 @@ export const renderScreen = (screen: string, target: RenderTarget): void => {
   }
 }
 
-export const blinkInstructions = (msg: string): void => {
-  const el = document.querySelector('#instructions')
+const getElement = (elementId: string): HTMLElement => {
+  const el = document.querySelector(`#${elementId}`)
 
   if (el === null) {
     throw new Error('#instructions element not found')
   }
 
+  return el as HTMLElement
+}
+
+export const blinkInstructions = (msg: string): void => {
+  const el = getElement('instructions')
   el.innerHTML = msg
   el.classList.add('blink')
+}
+
+export const addBackgroundImage = (
+  target: RenderTarget,
+  image: Image
+): void => {
+  target.el.appendChild(image.img)
+}
+
+export const hide = (elementId: string): void => {
+  const el = getElement(elementId)
+  el.classList.add('hide')
+}
+
+export const show = (elementId: string): void => {
+  const el = getElement(elementId)
+  el.classList.remove('hide')
 }
