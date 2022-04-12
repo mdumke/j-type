@@ -1,17 +1,17 @@
-import { LevelIntroStateData } from '../types'
+import { TournamentData } from '../types'
 import { renderScreen, addBackgroundImage } from '../display'
 import { AudioPlayer } from '../audio-player'
-import { LEVEL_INTRO } from '../constants'
+import { LEVEL_INTRO, ROUND_INTRO } from '../constants'
 
 class LevelIntroState {
-  async enter (state: LevelIntroStateData): Promise<void> {
+  async enter (state: TournamentData): Promise<void> {
     this.render(state)
-    const music = new AudioPlayer(state.assets.audio, 'shamisen')
+    const music = new AudioPlayer(state.assets.audio, 'typing')
     await music.play()
-    console.log('switching to round 1 intro')
+    state.stateMachine.change(ROUND_INTRO, state)
   }
 
-  render (state: LevelIntroStateData) {
+  render (state: TournamentData): void {
     renderScreen(LEVEL_INTRO, state.renderTarget)
     addBackgroundImage(
       state.renderTarget,

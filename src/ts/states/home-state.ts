@@ -28,8 +28,10 @@ class HomeState {
     if (e.code === 'Space') {
       this.state.stateMachine.change(LEVEL_INTRO, {
         ...this.state,
-        level: {
-          number: 1
+        game: {
+          level: 1,
+          lives: 9,
+          round: 1
         }
       })
     }
@@ -45,7 +47,7 @@ class HomeState {
 
   exit (): void {
     this.player.stop()
-    this.registerListeners()
+    this.removeListeners()
   }
 }
 

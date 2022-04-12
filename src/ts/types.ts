@@ -4,6 +4,7 @@ import { LoadingState } from './states/loading-state'
 import { BackstoryState } from './states/backstory-state'
 import { HomeState } from './states/home-state'
 import { LevelIntroState } from './states/level-intro-state'
+import { RoundIntroState } from './states/round-intro-state'
 
 export interface Image {
   name: string
@@ -44,8 +45,10 @@ export interface Assets {
   images: ImageAssets
 }
 
-export interface LevelInfo {
-  number: number
+export interface GameInfo {
+  level: number
+  lives: number
+  round: number
 }
 
 export interface StartStateData {
@@ -70,11 +73,11 @@ export interface HomeStateData {
   assets: Assets
 }
 
-export interface LevelIntroStateData {
+export interface TournamentData {
   renderTarget: RenderTarget
   stateMachine: StateMachine
   assets: Assets
-  level: LevelInfo
+  game: GameInfo
 }
 
 export type State =
@@ -83,10 +86,11 @@ export type State =
   | BackstoryState
   | HomeState
   | LevelIntroState
+  | RoundIntroState
 
 export type StateData =
   | StartStateData
   | LoadingStateData
   | BackstoryStateData
   | HomeStateData
-  | LevelIntroStateData
+  | TournamentData
