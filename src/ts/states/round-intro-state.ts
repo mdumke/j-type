@@ -1,6 +1,6 @@
 import { TournamentData } from '../types'
 import { renderScreen, addBackgroundImage, blinkInstructions } from '../display'
-import { ROUND_INTRO } from '../constants'
+import { ROUND_INTRO, PLAY } from '../constants'
 
 class RoundIntroState {
   state: TournamentData
@@ -22,7 +22,17 @@ class RoundIntroState {
 
   handleKeypress = (e: KeyboardEvent): void => {
     if (e.code === 'Space') {
-      console.log('changing into play state')
+      this.state.stateMachine.change(PLAY, {
+        ...this.state,
+        hero: {
+          name: 'jfrog',
+          health: 10
+        },
+        opponent: {
+          name: 'crabmyer',
+          health: 10
+        }
+      })
     }
   }
 

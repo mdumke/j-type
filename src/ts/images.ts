@@ -10,7 +10,10 @@ const sprites = [
 const backgrounds = [
   { path: 'backgrounds/backstory.png', name: 'backstory' },
   { path: 'backgrounds/home.png', name: 'home' },
-  { path: 'backgrounds/level-1-intro.png', name: 'level-1-intro' }
+  { path: 'backgrounds/level-1-intro.png', name: 'level-1-intro' },
+  { path: 'backgrounds/level-2-intro.png', name: 'level-2-intro' },
+  { path: 'backgrounds/level-1.png', name: 'level-1' },
+  { path: 'backgrounds/level-2.png', name: 'level-2' }
 ]
 
 const loadImage = async (item): Promise<Image> => {

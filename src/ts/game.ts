@@ -5,6 +5,7 @@ import { BackstoryState } from './states/backstory-state'
 import { HomeState } from './states/home-state'
 import { LevelIntroState } from './states/level-intro-state'
 import { RoundIntroState } from './states/round-intro-state'
+import { PlayState } from './states/play-state'
 import { RenderTarget } from './types'
 import {
   START,
@@ -12,7 +13,8 @@ import {
   BACKSTORY,
   HOME,
   LEVEL_INTRO,
-  ROUND_INTRO
+  ROUND_INTRO,
+  PLAY
 } from './constants'
 
 class Game {
@@ -25,6 +27,7 @@ class Game {
     stateMachine.register(HOME, new HomeState())
     stateMachine.register(LEVEL_INTRO, new LevelIntroState())
     stateMachine.register(ROUND_INTRO, new RoundIntroState())
+    stateMachine.register(PLAY, new PlayState())
 
     stateMachine.change(START, { renderTarget, stateMachine })
   }
