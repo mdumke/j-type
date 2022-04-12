@@ -1,7 +1,9 @@
 import { RenderTarget, Image } from './types'
-import { START, BACKSTORY } from './constants'
 import { html as startScreenHTML } from './screens/start-screen'
 import { html as backstoryScreenHTML } from './screens/backstory-screen'
+import { html as homeScreenHTML } from './screens/home-screen'
+import { html as levelIntroScreenHTML } from './screens/level-intro-screen'
+import { START, BACKSTORY, HOME, LEVEL_INTRO } from './constants'
 
 export const renderScreen = (screen: string, target: RenderTarget): void => {
   target.el.style.width = `${target.width}px`
@@ -13,6 +15,12 @@ export const renderScreen = (screen: string, target: RenderTarget): void => {
       break
     case BACKSTORY:
       target.el.innerHTML = backstoryScreenHTML
+      break
+    case HOME:
+      target.el.innerHTML = homeScreenHTML
+      break
+    case LEVEL_INTRO:
+      target.el.innerHTML = levelIntroScreenHTML
       break
     default:
       console.error(`screen "${screen}" not implemented`)

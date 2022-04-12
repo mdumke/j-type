@@ -2,6 +2,8 @@ import { StateMachine } from './states/state-machine'
 import { StartState } from './states/start-state'
 import { LoadingState } from './states/loading-state'
 import { BackstoryState } from './states/backstory-state'
+import { HomeState } from './states/home-state'
+import { LevelIntroState } from './states/level-intro-state'
 
 export interface Image {
   name: string
@@ -42,6 +44,10 @@ export interface Assets {
   images: ImageAssets
 }
 
+export interface LevelInfo {
+  number: number
+}
+
 export interface StartStateData {
   renderTarget: RenderTarget
   stateMachine: StateMachine
@@ -58,6 +64,29 @@ export interface BackstoryStateData {
   assets: Assets
 }
 
-export type State = StartState | LoadingState | BackstoryState
+export interface HomeStateData {
+  renderTarget: RenderTarget
+  stateMachine: StateMachine
+  assets: Assets
+}
 
-export type StateData = StartStateData | LoadingStateData | BackstoryStateData
+export interface LevelIntroStateData {
+  renderTarget: RenderTarget
+  stateMachine: StateMachine
+  assets: Assets
+  level: LevelInfo
+}
+
+export type State =
+  | StartState
+  | LoadingState
+  | BackstoryState
+  | HomeState
+  | LevelIntroState
+
+export type StateData =
+  | StartStateData
+  | LoadingStateData
+  | BackstoryStateData
+  | HomeStateData
+  | LevelIntroStateData

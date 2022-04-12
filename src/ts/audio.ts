@@ -5,6 +5,7 @@ const SFX_PATH = 'audio/sfx'
 const sfx = [
   { filename: 'typing.mp3', name: 'typing' },
   { filename: 'stick.mp3', name: 'stick' },
+  { filename: 'shamisen.mp3', name: 'shamisen' },
   { filename: 'koto.mp3', name: 'koto' }
 ]
 

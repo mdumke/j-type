@@ -8,9 +8,9 @@ const sprites = [
 ]
 
 const backgrounds = [
-  { path: 'backgrounds/backstory-bg.png', name: 'backstory' },
-  { path: 'backgrounds/home-bg.png', name: 'home' },
-  { path: 'backgrounds/level-1-intro-bg.png', name: 'level-1-intro' }
+  { path: 'backgrounds/backstory.png', name: 'backstory' },
+  { path: 'backgrounds/home.png', name: 'home' },
+  { path: 'backgrounds/level-1-intro.png', name: 'level-1-intro' }
 ]
 
 const loadImage = async (item): Promise<Image> => {

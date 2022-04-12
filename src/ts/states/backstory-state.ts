@@ -1,29 +1,32 @@
 import { BackstoryStateData } from '../types'
 import { renderScreen, blinkInstructions, addBackgroundImage } from '../display'
 import { AudioPlayer } from '../audio-player'
-import { BACKSTORY } from '../constants'
+import { BACKSTORY, HOME } from '../constants'
 
 class BackstoryState {
   state: BackstoryStateData
-  player: AudioPlayer
+  music: AudioPlayer
 
   async enter (state: BackstoryStateData): Promise<void> {
-    renderScreen(BACKSTORY, state.renderTarget)
-    addBackgroundImage(
-      state.renderTarget,
-      state.assets.images.backgrounds['backstory']!
-    )
-
-    this.player = new AudioPlayer(state.assets.audio, 'typing')
-    this.player.start()
+    this.state = state
+    this.render()
+    this.music = new AudioPlayer(state.assets.audio, 'typing')
+    this.music.start()
     this.registerListeners()
+    blinkInstructions('Press Space to Skip')
+  }
 
-    blinkInstructions('Press Space')
+  render () {
+    renderScreen(BACKSTORY, this.state.renderTarget)
+    addBackgroundImage(
+      this.state.renderTarget,
+      this.state.assets.images.backgrounds['backstory']!
+    )
   }
 
   handleKeypress = (e: KeyboardEvent): void => {
     if (e.code === 'Space') {
-      console.log('switching to home screen')
+      this.state.stateMachine.change(HOME, { ...this.state })
     }
   }
 
@@ -36,7 +39,7 @@ class BackstoryState {
   }
 
   exit (): void {
-    this.player.stop()
+    this.music.stop()
     this.removeListeners()
   }
 }

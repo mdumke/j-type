@@ -8,7 +8,7 @@ class StartState {
   enter (state: StartStateData): void {
     this.state = state
     renderScreen(START, state.renderTarget)
-    blinkInstructions('Press Space')
+    blinkInstructions('Press Space to Play')
     this.registerListeners()
   }
 

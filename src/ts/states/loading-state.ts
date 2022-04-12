@@ -9,7 +9,7 @@ class LoadingState {
   async enter (state: LoadingStateData): Promise<void> {
     hide('instructions')
     show('loader')
-    const assets = await this.loadAssets(500)
+    const assets = await this.loadAssets(50)
 
     state.stateMachine.change(BACKSTORY, {
       ...state,
